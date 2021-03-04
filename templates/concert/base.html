@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+
+<meta charset="utf-8"/>
+<html>
+    <head>
+    <title> Team10B Concert -{% block title_block %}Let's go concert!{% endblock %}</title>
+    </head>
+    
+    <body>
+    <li><a href="{% url 'concert:index' %}">Home</a><br />
+    </body>
+</html>
