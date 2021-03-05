@@ -9,6 +9,13 @@
     </head>
     
     <body>
-    <li><a href="{% url 'concert:index' %}">Home</a><br />
+    {% block body_block %}
+    {% endblock %}
+		<a href="{% url 'concert:index' %}">Home </a>&nbsp
+		<a href="{% url 'concert:booking' %}">Booking </a>&nbsp
+		<a href="{% url 'concert:concert' %}">Concert </a>&nbsp
+		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
+		<a href="{% url 'concert:register' %}">Register </a>&nbsp
+		<a href="{% url 'concert:concert' %}">Sign in</a>
     </body>
 </html>

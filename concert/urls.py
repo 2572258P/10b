@@ -14,8 +14,9 @@ app_name = 'concert'
 urlpatterns = [
         path('',views.index,name = 'index'),
         path('about/',views.about,name = 'about'),
-        path('signUp/',views.index,name = 'signup'),
-        path('order/',views.index,name = 'order'),
-        path('order_result/',views.index,name = 'order_result'),
-        path('contact/',views.index,name = 'contact'),
+        path('booking/',views.booking,name = 'booking'),
+        path('concert/',views.concert,name = 'concert'),
+        path('myaccount/',views.myaccount,name = 'myaccount'),
+        path('register/',views.register,name = 'register'),
+        path('signin/',views.signin,name = 'signin')
         ]
