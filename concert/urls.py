@@ -18,5 +18,6 @@ urlpatterns = [
         path('concert/',views.concert,name = 'concert'),
         path('myaccount/',views.myaccount,name = 'myaccount'),
         path('register/',views.register,name = 'register'),
-        path('signin/',views.signin,name = 'signin')
+        path('signin/',views.signin,name = 'signin'),
+        path('dev/',views.dev,name = 'dev')
         ]
