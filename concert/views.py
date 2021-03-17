@@ -49,26 +49,25 @@ def myaccount(request):
 def register(request):
     registered = False
     
+    custom_error_msg = []
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            
-            user.set_password(user.password)
-            user.save()
-            
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            
-            if 'picture' in request.FILES:
-               profile.picture = request.FILES['picture']
+            print(request.POST.get("termsOfService"))
+               
+            if request.POST.get("pw_confirm") != request.POST.get("password"):
+                custom_error_msg.append("Please, check the password confirmation")                
+            else:                
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()                
+                profile = profile_form.save(commit=False)
+                profile.user = user
+                profile.save()
+                registered = True
                 
-            profile.save()
-            registered = True
-        else:
-            print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -77,7 +76,8 @@ def register(request):
           'concert/register.html',
           context= {'user_form':user_form,
                     'profile_form': profile_form,
-                    'registered':registered})
+                    'registered':registered,
+                    'custom_error_msg':custom_error_msg})
         
 
 def signin(request):

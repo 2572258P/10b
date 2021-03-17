@@ -8,21 +8,22 @@ class UserForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ('username','password')
+        fields = ('username','password','first_name','last_name','email')
         
         
        
 class UserProfileForm(forms.ModelForm):
+    pw_confirm = forms.CharField(widget=forms.PasswordInput())    
+    termsOfService = forms.BooleanField()
     class Meta:
         model = UserProfile
-        fields = ('website','picture',)
+        fields = ('pw_confirm','termsOfService')
         
 
 class ConcertForm(forms.ModelForm):
     class Meta:
         model = ConcertModel
         fields = '__all__'
-        #field = ('concertId','concertName','bandId','location','date','tickets')
   
         
 class TestForm(forms.ModelForm):

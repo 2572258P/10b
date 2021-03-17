@@ -3,16 +3,22 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+max_char_field = 128 #define another constant when you need another length of string
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_image',blank=True)
+    pw_confirm = models.CharField(max_length=max_char_field)
+    termsOfService = models.BooleanField(default=False)
+    
+    
+    #website = models.URLField(blank=True)
+    #picture = models.ImageField(upload_to='profile_image',blank=True)
     
     def __str__(self):
         return self.user.username
 
 
-max_char_field = 128 #define another constant when it comes to need more
+
 
 class TestModel(models.Model):
     tempId = models.IntegerField(default=0)
