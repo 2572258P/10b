@@ -32,18 +32,18 @@ class ConcertModel(models.Model):
     date = models.DateField()
     tickets = models.IntegerField(default=0)
     
-class Band:
+class Band(models.Model):
     bandId = models.IntegerField(default=0)
     bandName = models.CharField(max_length=max_char_field)
     concertId = models.IntegerField(default=0)
     
-class Ticket:
+class Ticket(models.Model):
     ticketId = models.IntegerField(default=0)
     concertId = models.IntegerField(default=0)
     userId = models.IntegerField(default=0)
     
     
-class Order:
+class Order(models.Model):
     orderId = models.IntegerField(default=0)
     ticketId = models.IntegerField(default=0)
     bandId = models.IntegerField(default=0)

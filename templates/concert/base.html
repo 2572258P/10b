@@ -3,19 +3,58 @@
 
 
 <meta charset="utf-8"/>
-<html>
-    <head>
-    <title> Team10B Concert -{% block title_block %}Let's go concert!{% endblock %}</title>
+<html>    
+    <head>    
+    <style>
+    *{font-family: arial, sans-serif;}
+
+    #top {
+      width: 70%;
+      height: 200px;
+      border: 0px solid black; 
+      display: flex;
+      align-items: top;
+    }
+    #top div {
+       flex: 1;
+       border: 0px solid black; 
+       padding-left:40px;
+       padding-top:80px;
+    }
+    {% block style_block %}
+    {% endblock %}
+    
+    </style>
+    <title> Team10B Concert -{% block title_block %}Let's go to the concert!{% endblock %}</title>
     </head>
     
-    <body>
+    <body>    
+      <div id="top">
+      <div>{% block top1_block %}Ticket Finder{% endblock %}</div>
+      <div>{% block top2_block %}{% endblock %}</div>
+      <div style="flex:2;padding-left:0px;">
+          {% block top3_block %}
+            <form action="/action_page.php">
+              <input type="text" id="fname" name="fname">
+              <input type="submit" value="Search">
+            </form>
+          {% endblock %}</div>
+      <div>{% block top4_block %}Login or Log out{% endblock %}</div>
+      <div>{% block top5_block %}Register or My page{% endblock %}</div>
+      </div>
     {% block body_block %}
-    {% endblock %}
-		<a href="{% url 'concert:index' %}">Home </a>&nbsp
-		<a href="{% url 'concert:booking' %}">Booking </a>&nbsp
-		<a href="{% url 'concert:concert' %}">Concert </a>&nbsp
-		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
-		<a href="{% url 'concert:register' %}">Register </a>&nbsp
-		<a href="{% url 'concert:signin' %}">Sign in</a>
-    </body>
+    {% endblock %}    
+     <div style="padding-top: 30px; position: relative; text-align: left">
+         <div style="font-size:12px;color:red">
+         This bottom line is just for test efficiency all links are in one place<br/></div>
+         
+    		<a href="{% url 'concert:index' %}">Home </a>&nbsp
+    		<a href="{% url 'concert:booking' %}">Booking </a>&nbsp
+    		<a href="{% url 'concert:concert' %}">Concert </a>&nbsp
+    		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
+    		<a href="{% url 'concert:register' %}">Register </a>&nbsp
+    		<a href="{% url 'concert:signin' %}">Sign in</a>
+		</div>
+		
+   </body>
 </html>

@@ -1,9 +1,39 @@
 {% extends 'concert/base.html' %}
 
-{% block title_block %}
-Welcome to the concert project
+{% block style_block %}
+table {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 {% endblock %}
 
 {% block body_block %}
-This is the index Page<br />
+<table>
+<tr style="background-color:grey">
+    <th>Concert Name</th>
+    <th>Band Id</th>
+    <th>Band Location</th>
+    <th>Date</th>
+    <th>Tickets</th>
+</tr>
+{% for concert in concertList %}
+<tr>
+    <th>{{ concert.concertName }}</th>
+    <th>{{ concert.bandId }}</th>
+    <th>{{ concert.location }}</th>
+    <th>{{ concert.date }}</th>
+    <th>{{ concert.tickets }}</th>
+</tr>
+{% endfor %}
+</table>
 {% endblock %}

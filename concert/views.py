@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from concert.forms import UserForm,UserProfileForm,ConcertForm #TestForm
+from concert.models import ConcertModel
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -27,8 +28,14 @@ def dev(request):
         
 # Create your views here.
 def index(request):
-    #context_dict = {}
-    return render(request,'concert/index.html')#,context=context_dict)
+    concertList = ConcertModel.objects.order_by('-date')
+    
+    print(concertList)
+    
+    context_dict = {}
+    context_dict['concertList'] = concertList
+    
+    return render(request,'concert/index.html',context=context_dict)
 
 def about(request):
     #context_dict = {}
