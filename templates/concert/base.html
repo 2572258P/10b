@@ -38,7 +38,7 @@
       <div>{% block top2_block %}{% endblock %}</div>
       <div style="flex:2;padding-left:0px;">
           {% block top3_block %}
-            <form action="/action_page.php">
+            <form action="{% url 'concert:index' %}">
               <input type="text" id="fname" name="fname">
               <input type="submit" value="Search">
             </form>
