@@ -88,9 +88,10 @@ def register(request):
         
 
 def signin(request):
+    error_msg = []
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        password = request.POST.get('password')        
         
         user = authenticate(username=username,password=password)
         if user:
@@ -98,9 +99,24 @@ def signin(request):
                 login(request,user)
                 return redirect(reverse('concert:index'))
             else:
-                return HttpResponse("Your account is disabled.")
+                error_msg.append("Your account is disabled.")
         else:
-            return HttpResponse("Invalid signing in details")
-    else:
-        return render(request,'concert/signin.html')
+            error_msg.append("Invalid signing in details")    
+            
+    return render(request,'concert/signin.html',context={"error_msg":error_msg})
 
+def signout(request):
+    logout(request)    
+    return redirect(reverse('concert:index'))
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
