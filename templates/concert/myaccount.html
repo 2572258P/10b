@@ -4,6 +4,22 @@
 Welcome to the concert project
 {% endblock %}
 
+
+{% block top2_block %}{% endblock %}
+
+
+
+{% block top3_block %}
+First Name : {{user.first_name}}<br/>
+Last Name  : {{user.last_name}}<br/>
+Email      : {{user.username}}
+{% endblock %}
+
+{% block top4_block %}
+{% endblock %}
+
+{% block top5_block %}{% endblock %}
+
 {% block body_block %}
-This is the MyAccount page<br />
+{{user.email}}
 {% endblock %}

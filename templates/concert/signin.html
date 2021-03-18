@@ -10,7 +10,7 @@ Welcome to the concert project
     {%endfor%}  
     <form id="signin_form" method="post" action="{% url 'concert:signin' %}" %}>
         {% csrf_token %}
-        Username : <input type="text" name="username" value="" size="50">
+        Email : <input type="text" name="username" value="" size="50">
         <br />
         Password : <input type="password" name="password" value="" size="50" />
         <br />
