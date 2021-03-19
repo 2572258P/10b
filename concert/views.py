@@ -27,13 +27,15 @@ def dev(request,cmd):
             
             ConcertModel.objects.get_or_create(date=datetime.now(),concertId=Id,concertName=name);                        
         if cmd == 'addTicket':
-            if User.is_authenticated:                
+            if request.user.is_authenticated:
                 ticketId = random.randint(1,10000)
                 concert = ConcertModel.objects.last()
                 Id = 0
                 if concert:
                     Id = concert.concertId
                 Ticket.objects.get_or_create(ticketId=ticketId,user=request.user,concertId=Id)
+            else:
+                print("You need to be authenticated")
                 
             
         
