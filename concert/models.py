@@ -25,7 +25,6 @@ class ConcertModel(models.Model):
     bandId = models.IntegerField(default=0)
     location = models.CharField(max_length=max_char_field)
     date = models.DateField()
-    tickets = models.IntegerField(default=0)
     
 class Band(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

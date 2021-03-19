@@ -9,12 +9,11 @@ Booking Page
 {% block body_block %}
 {% if concert %}
 <div>
-    <p>Concert ID : {{ concert.concertId }}</p>
-    <p>Name : {{ concert.concertName }}</p>
+    <p>CID : {{ concert.concertId }}</p>
+    <p>Concert Name : {{ concert.concertName }}</p>
     <p>BandId : {{ concert.bandId }}</p>
     <p>Location : {{ concert.location }}</p>
     <p>Date : {{ concert.date }}</p>
-    <p>Ticket ID : {{ concert.tickets }}</p>
 </div>
 
 <strong>Is it correct?</strong>

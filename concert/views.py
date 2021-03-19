@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from concert.forms import UserForm,UserProfileForm,ConcertForm,BandForm #TestForm
-from concert.models import ConcertModel,Ticket,UserProfile
+from concert.models import ConcertModel,Ticket,UserProfile,Band
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -41,13 +41,18 @@ def dev(request,cmd):
         
     return render(request,'concert/dev.html')
 
-        
 # Create your views here.
 def index(request):
     concertList = ConcertModel.objects.order_by('-date')    
     context = {}
     context['concertList'] = concertList
     
+    if request.user.is_authenticated == True:
+        print("User Profile")
+        profile = UserProfile.objects.get(user=request.user)
+        if profile and profile.weAreBand:
+            context['weAreBand'] = True
+            
     return render(request,'concert/index.html',context=context)
 
 def about(request):
@@ -88,10 +93,33 @@ def myaccount(request):
     tickets = Ticket.objects.filter(user=request.user)
     return render(request,'concert/myaccount.html',context={'tickets':tickets})
 
-def register(request):
+def concertAdd(request):
+    concertAdded = False
+    context = {}
     
-    registered = False
+    if request.method == 'POST':                
+        if "concertAdd" in request.POST:
+            concert_form = ConcertForm(request.POST)
+            print(concert_form.errors)
+            if concert_form.is_valid():
+                concert = concert_form.save()
+                concert.concertId = getTimeToInt();
+                
+                foundBand = Band.objects.get(user=request.user)
+                
+                concert.bandId = foundBand.bandId
+                concert.save()
+                concertAdded = True
+            
+    else:
+        context['concertForm'] = ConcertForm();
+        
+    context['concertAdded'] = concertAdded
+    return render(request,'concert/concertAdd.html',context=context)
     
+
+def register(request):    
+    registered = False    
     custom_error_msg = []
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -99,9 +127,7 @@ def register(request):
         band_form = BandForm(request.POST)
         passedError = True
         
-        print("##############################")
-        print(request.POST.get('bandName') == '')
-        print("##############################")
+        print(request.POST.get('weAreBand'))
         
         if request.POST.get('pw_confirm') != request.POST.get('password'):
             custom_error_msg.append('Please, check the password confirmation')
@@ -109,20 +135,20 @@ def register(request):
         elif request.POST.get('weAreBand') and request.POST.get('bandName') =='':
             custom_error_msg.append('Please, set your band name')
             passedError = False
-        
+            
         if passedError == True and user_form.is_valid() and profile_form.is_valid() and band_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
-            user.save() 
-            
+            user.save()
 
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
             
-            if request.POST.get('weAreBand' == True):
-                band = band_form.save()
+            if request.POST.get('weAreBand'):                
+                band = band_form.save(commit=False)
                 band.bandName = request.POST.get('bandName')
+                band.bandId = getTimeToInt()
                 band.user = user
                 band.save()
 
@@ -131,10 +157,8 @@ def register(request):
                 profile.uniqueId = lastPF.uniqueId + 1;
             else:
                 profile.uniqueId = 0
-            
-            
-            registered = True
-            
+
+            registered = True            
             username = user.username
             password = request.POST.get('pw_confirm')
             authenticate(username=request.user,password=password)                
@@ -156,8 +180,7 @@ def register(request):
 
 def signin(request):
     error_msg = []
-    if request.method == 'POST':
-        
+    if request.method == 'POST':        
         username = request.POST.get('username')
         password = request.POST.get('password')        
         user = authenticate(username=username,password=password)
@@ -174,15 +197,7 @@ def signin(request):
 
 def signout(request):
     logout(request)    
-    return redirect(reverse('concert:index'))
-        
-        
-        
-        
-        
-        
-        
-        
+    return redirect(reverse('concert:index'))  
         
         
         

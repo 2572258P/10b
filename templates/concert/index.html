@@ -2,8 +2,12 @@
 
 
 {% block body_block %}
-<table>
 
+{% if weAreBand %}
+<a href="{% url 'concert:concertAdd' %}"><button>Register new concert</button></a>
+{% endif %}
+
+<table>
 <tr class="title">
     <th>Upcoming Concerts : {{concertList.count}} </th><th></th>
 </tr>

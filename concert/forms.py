@@ -2,6 +2,8 @@
 from django import forms
 from concert.models import UserProfile,ConcertModel,TestModel,Band
 from django.contrib.auth.models import User
+from datetime import datetime as dt
+import datetime
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -27,10 +29,12 @@ class BandForm(forms.ModelForm):
         fields = ('bandName',)
 
 class ConcertForm(forms.ModelForm):
+    concertName = forms.CharField()
+    location = forms.CharField()
+    date = forms.DateField(initial=datetime.date.today())
     class Meta:
         model = ConcertModel
-        fields = '__all__'
-  
+        fields = ('concertName','location','date')
         
 class TestForm(forms.ModelForm):
     concertId = forms.IntegerField(label="ConcertId")

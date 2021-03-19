@@ -8,31 +8,26 @@ This is the register Page <br />
 
 {% if registered %}
 <strong>Register done.<br /></strong>
-<a href="{% url 'concert:index' %}">Return to the home page</a><br />
+<a href="{% url 'concert:index' %}">Return to home</a><br />
 {% else %}
-    <strong>Fill the form to register</strong><br />
-    <form id="user_form" method="post" action="{% url 'concert:register' %}"
-    enctype="multipart/form-data">
-{% csrf_token %}
-<p>First name:{{ user_form.first_name }}</p>
-<p>Last name:{{ user_form.last_name }}</p>
-<p>Email:{{ user_form.username }}</p>
-<p>Password:{{ user_form.password }}</p>
-<p>Password confirm:{{ profile_form.pw_confirm }}</p>
-<p>{{ profile_form.weAreBand }} Check, if you are in a band, then you can register concerts</p>
-<p>Band Name : {{band_form.bandName}}<br/> You need to set the band name when you check you are a band</p>
-
-<p>{{ profile_form.termsOfService }} Terms of service : If we have terms of service.. </p>
-
-
-{% for error in custom_error_msg %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-    </div>
-{% endfor %}
-<strong>{{ user_form.errors }}</strong>
-
-<input type="submit" name="submit" value="Register" />
+<strong>Fill the form to register</strong><br />
+<form id="user_form" method="post" action="{% url 'concert:register' %}"enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>First name:{{ user_form.first_name }}</p>
+    <p>Last name:{{ user_form.last_name }}</p>
+    <p>Email:{{ user_form.username }}</p>
+    <p>Password:{{ user_form.password }}</p>
+    <p>Password confirm:{{ profile_form.pw_confirm }}</p>
+    <p>{{ profile_form.weAreBand }} Check, if you are in a band, then you can register concerts</p>
+    <p>Band Name : {{band_form.bandName}}<br/> You need to set the band name when you check you are a band</p>    
+    <p>{{ profile_form.termsOfService }} Terms of service : If we have terms of service.. </p>    
+    {% for error in custom_error_msg %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+    <strong>{{ user_form.errors }}</strong>    
+    <input type="submit" name="submit" value="Register" />
 </form>
 {% endif %}
 {% endblock %}
