@@ -89,7 +89,7 @@ def myaccount(request):
     return render(request,'concert/myaccount.html',context={'tickets':tickets})
 
 def register(request):
-    logout(request)
+    
     registered = False
     
     custom_error_msg = []
@@ -99,10 +99,14 @@ def register(request):
         band_form = BandForm(request.POST)
         passedError = True
         
+        print("##############################")
+        print(request.POST.get('bandName') == '')
+        print("##############################")
+        
         if request.POST.get('pw_confirm') != request.POST.get('password'):
             custom_error_msg.append('Please, check the password confirmation')
             passedError = False
-        elif request.POST.get('weAreBand' == True) and request.POST.get('bandName' == ''):
+        elif request.POST.get('weAreBand') and request.POST.get('bandName') =='':
             custom_error_msg.append('Please, set your band name')
             passedError = False
         
@@ -130,10 +134,13 @@ def register(request):
             
             
             registered = True
-
             
-                
+            username = user.username
+            password = request.POST.get('pw_confirm')
+            authenticate(username=request.user,password=password)                
+            login(request,user)
     else:
+        logout(request)
         band_form = BandForm()
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -150,9 +157,9 @@ def register(request):
 def signin(request):
     error_msg = []
     if request.method == 'POST':
+        
         username = request.POST.get('username')
         password = request.POST.get('password')        
-        
         user = authenticate(username=username,password=password)
         if user:
             if user.is_active:
