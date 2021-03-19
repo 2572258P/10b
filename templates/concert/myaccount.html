@@ -21,5 +21,22 @@ Email      : {{user.username}}
 {% block top5_block %}{% endblock %}
 
 {% block body_block %}
-{{user.email}}
+<table>
+<tr class="title">
+<th>Your Ticket :</th><th></th>
+</tr>
+{% for ticket in tickets %}
+<tr>
+<th>
+TicketId  :{{ticket.ticketId}}<br/>
+ConcertId :{{ticket.concertId}}<br/>
+</th>
+<th>
+<a href="/concert/{{ticket.concertId}}/">View Concert</a>
+</th>
+</tr>
+{% endfor %}
+
+</table>
+
 {% endblock %}

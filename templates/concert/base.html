@@ -20,7 +20,25 @@
        border: 0px solid black; 
        padding-left:20px;
        padding-top:80px;
+    }    
+    table {
+      border-collapse: collapse;
+      width: 70%;
     }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    tr.title{
+        background-color:grey;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    
     {% block style_block %}
     {% endblock %}
     
@@ -71,16 +89,15 @@
         This bottom line is just for test efficiency all links are in one place - will be removed<br/></div>         
     		<a href="{% url 'concert:index' %}">Home </a>&nbsp
     		<a href="{% url 'concert:about' %}">About </a>&nbsp
-    		<a href="{% url 'concert:booking' %}">Booking </a>&nbsp
-    		<a href="{% url 'concert:concert' %}">Concert </a>&nbsp
+    		<a href="{% url 'concert:booking' %}">Booking </a>&nbsp    		
     		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
-    		<a href="{% url 'concert:register' %}">Register </a>&nbsp
-    		
+    		<a href="{% url 'concert:register' %}">Register </a>&nbsp    		
     		{% if user.is_authenticated %}
-            <a href="{% url 'concert:signout' %}">Sign out</a>
+            <a href="{% url 'concert:signout' %}">Sign out</a>&nbsp
         {% else %}
-            <a href="{% url 'concert:signin' %}">Sign in</a>
+            <a href="{% url 'concert:signin' %}">Sign in</a>&nbsp
         {% endif %}
+            <a href="/dev/1/">Development</a>&nbsp
     		
 		</div>
 		

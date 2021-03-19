@@ -6,30 +6,18 @@ This is the page for developers
 
         
 {% block body_block %}
+<div>Random Generation for the DataBase</div><br/>
 
-<form id="addConcert" method="post" action="{% url 'concert:dev'%}"
-enctype="multipart/form-data">
+
+<form id="addConcert" method="post" action="/dev/addConcert/"enctype="multipart/form-data">
  {% csrf_token %}
-{{ concertForm.as_p }}
-<!-- {{ testForm.as_p }} -->
+<input type="submit" Value="AddConcert">
+</form>
+<br/>
 
-{% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-
-
-<input type="submit" name="AddConcert">
+<form id="addConcert" method="post" action="/dev/addTicket/"enctype="multipart/form-data">
+ {% csrf_token %}
+<input type="submit" Value="AddTicket">
 </form>
 
 {% endblock %}

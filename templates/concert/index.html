@@ -1,38 +1,24 @@
 {% extends 'concert/base.html' %}
 
-{% block style_block %}
-table {
-  border-collapse: collapse;
-  width: 80%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-{% endblock %}
 
 {% block body_block %}
-<table style="width:70%">
-<tr style="background-color:grey">
-    <th>Concert Name</th>
-    <th>Band Id</th>
-    <th>Band Location</th>
-    <th>Date</th>
-    <th>Tickets</th>
+<table>
+
+<tr class="title">
+    <th>Upcoming Concerts : {{concertList.count}} </th><th></th>
 </tr>
 {% for concert in concertList %}
 <tr>
-    <th>{{ concert.concertName }}</th>
-    <th>{{ concert.bandId }}</th>
-    <th>{{ concert.location }}</th>
-    <th>{{ concert.date }}</th>
-    <th>{{ concert.tickets }}</th>
+<th>
+    Concert : {{ concert.concertName }}<br/>
+    BandId : {{ concert.bandId }}<br/>
+    Location : {{ concert.location }}<br/>
+    Date : {{ concert.date }}<br/>
+    Ticket : {{ concert.tickets }}<br/>
+</th>
+<th>
+<a href="concert/{{concert.concertId}}/">View Concert</a>
+</th>
 </tr>
 {% endfor %}
 </table>

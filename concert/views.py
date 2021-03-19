@@ -1,37 +1,48 @@
 from django.shortcuts import render
 from concert.forms import UserForm,UserProfileForm,ConcertForm #TestForm
-from concert.models import ConcertModel
+from concert.models import ConcertModel,Ticket,UserProfile
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib import messages 
-
+from datetime import datetime
+import random
 #from django.http import HttpResponse
 
-def dev(request):    
-    concertAdded = False
-    if request.method == 'POST':
-        cf = ConcertForm(request.POST)
-        if cf.is_valid():        
-            cf.save(commit=True)
-            concertAdded = True
-        else:
-            messages.error(request, "Error")
-            
-    else:
-        cf = ConcertForm()
+from datetime import datetime
 
-    context = {"concertForm":cf,"concertAdded":concertAdded,"messages":messages,"form":cf}
-    return render(request,'concert/dev.html',context)
+def getTimeToInt():    
+    a = datetime.now()
+    a = int(a.strftime('%Y%m%d%H%M%S'))
+    return a
+
+
+def dev(request,cmd):
+    if request.method == 'POST':
+        if cmd == 'addConcert':
+            Id = getTimeToInt()
+            name = "Glasgow party" + str(random.randint(1,10000))
+            
+            ConcertModel.objects.get_or_create(date=datetime.now(),concertId=Id,concertName=name);                        
+        if cmd == 'addTicket':
+            if User.is_authenticated:                
+                ticketId = random.randint(1,10000)
+                concert = ConcertModel.objects.last()
+                Id = 0
+                if concert:
+                    Id = concert.concertId
+                Ticket.objects.get_or_create(ticketId=ticketId,user=request.user,concertId=Id)
+                
+            
+        
+    return render(request,'concert/dev.html')
 
         
 # Create your views here.
 def index(request):
-    concertList = ConcertModel.objects.order_by('-date')
-    
-    print(concertList)
-    
+    concertList = ConcertModel.objects.order_by('-date')    
     context_dict = {}
     context_dict['concertList'] = concertList
     
@@ -45,13 +56,17 @@ def booking(request):
     #context_dict = {}
     return render(request,'concert/booking.html')#,context=context_dict)
 
-def concert(request):
-    #context_dict = {}
-    return render(request,'concert/concert.html')#,context=context_dict)
+def concert(request,Id):
+    cont = {}
+    if request.method == 'POST':
+        foundConcert = concert.objects.get(concertId=Id)
+        cont['concert'] = foundConcert        
+    return render(request,'concert/concert.html',context=cont)
 
-def myaccount(request):
-    #context_dict = {}
-    return render(request,'concert/myaccount.html')#,context=context_dict)
+def myaccount(request):    
+    #tickets = Ticket.objects.order_by('-ticketId')#Ticket.objects.filter(userId='abc')    
+    tickets = Ticket.objects.filter(user=request.user)
+    return render(request,'concert/myaccount.html',context={'tickets':tickets})
 
 def register(request):
     registered = False
@@ -61,9 +76,7 @@ def register(request):
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         
-        if user_form.is_valid() and profile_form.is_valid():
-            print(request.POST.get("termsOfService"))
-               
+        if user_form.is_valid() and profile_form.is_valid():               
             if request.POST.get("pw_confirm") != request.POST.get("password"):
                 custom_error_msg.append("Please, check the password confirmation")                
             else:                
@@ -72,6 +85,13 @@ def register(request):
                 user.save()                
                 profile = profile_form.save(commit=False)
                 profile.user = user
+                
+                lastPF = UserProfile.objects.last();
+                if lastPF:
+                    profile.uniqueId = lastPF.uniqueId + 1;
+                else:
+                    profile.uniqueId = 0
+                
                 profile.save()
                 registered = True
                 

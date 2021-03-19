@@ -9,6 +9,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     pw_confirm = models.CharField(max_length=max_char_field)
     termsOfService = models.BooleanField(default=False)
+    uniqueId = models.IntegerField(default=0)
     
     
     #website = models.URLField(blank=True)
@@ -39,8 +40,8 @@ class Band(models.Model):
     
 class Ticket(models.Model):
     ticketId = models.IntegerField(default=0)
-    concertId = models.IntegerField(default=0)
-    userId = models.IntegerField(default=0)
+    concertId = models.IntegerField(default=0)    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     
 class Order(models.Model):

@@ -15,10 +15,10 @@ urlpatterns = [
         path('',views.index,name = 'index'),
         path('about/',views.about,name = 'about'),
         path('booking/',views.booking,name = 'booking'),
-        path('concert/',views.concert,name = 'concert'),
+        path('concert/<int:Id>/',views.concert,name = 'concert'),        
         path('myaccount/',views.myaccount,name = 'myaccount'),
         path('register/',views.register,name = 'register'),
         path('signin/',views.signin,name = 'signin'),
         path('signout/',views.signout,name = 'signout'),
-        path('dev/',views.dev,name = 'dev')
+        path('dev/<slug:cmd>/',views.dev,name = 'dev')
         ]
