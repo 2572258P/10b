@@ -1,0 +1,23 @@
+{% extends 'concert/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+{% if concert %}
+    Concert Add
+{% endif %}
+{% endblock %}
+
+{%block body_block%}
+
+{% if concertAdded %}
+<strong>Concert successfully added<br /></strong>
+<a href="{% url 'concert:index' %}">Return to home</a><br />
+{% else %}
+    <form id="concertAdd" method="post" action={% url 'concert:concertAdd'%} enctype="multipart/form-data">
+    {{concertForm.as_p}}    
+     {% csrf_token %}
+    <input type="submit" Value="Register Concert" name="concertAdd">
+    </form>
+{% endif %}
+
+{%endblock%}
