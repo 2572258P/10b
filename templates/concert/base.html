@@ -8,19 +8,19 @@
     <style>
     *{font-family: arial, sans-serif;}
 
-    #top {
+    #topmenu {
       width: 70%;
-      height: 200px;
+      height: 150px;
       border: 0px solid black; 
       display: flex;
       align-items: top;
     }
-    #top div {
+    #topmenu div {
        flex: 1;
        border: 0px solid black; 
        padding-left:20px;
        padding-top:80px;
-    }    
+    }
     table {
       border-collapse: collapse;
       width: 70%;
@@ -47,11 +47,11 @@
     </head>
 
     <body>    
-      <div id="top">
+      <div id="topmenu">
           <div style="padding-top:0px;">
               {% block top1_block %}
                   <a href="{% url 'concert:index' %}">
-                  <img src="/static/logo.jpg" alt="logo image" style="width:100%;height:100%;object-fit:contain;"></a>
+                  <img src="{% static 'logo.jpg' %}" alt="logo image" style="width:100%;height:100%;object-fit:contain;"></a>
               {% endblock %}
           </div>
           <div>{% block top2_block %}{% endblock %}</div>
@@ -88,8 +88,7 @@
          <div style="font-size:12px;color:red">
         This bottom line is just for test efficiency all links are in one place - will be removed<br/></div>         
     		<a href="{% url 'concert:index' %}">Home </a>&nbsp
-    		<a href="{% url 'concert:about' %}">About </a>&nbsp
-    		<a href="{% url 'concert:booking' %}">Booking </a>&nbsp    		
+    		<a href="{% url 'concert:about' %}">About </a>&nbsp    		
     		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
     		<a href="{% url 'concert:register' %}">Register </a>&nbsp    		
     		{% if user.is_authenticated %}

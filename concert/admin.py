@@ -7,7 +7,7 @@ class ConcertModelAdmin(admin.ModelAdmin):
 
 
 class BandModelAdmin(admin.ModelAdmin):
-    list_display = ('bandId','bandName','concertId')
+    list_display = ('bandId','bandName')
 
 class TicketModelAdmin(admin.ModelAdmin):
     list_display = ('ticketId','concertId')

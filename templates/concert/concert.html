@@ -1,11 +1,45 @@
 {% extends 'concert/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
-concert page
+{% if concert %}
+    {{concert.concertName}}
+{% endif %}
+{% endblock %}
+
+
+{% block style_block %}
+    #concertBody {
+      width: 70%;
+      border: 0px solid black; 
+      display: flex;
+             align-items: bottom;
+      
+    }
+    #concertBody div {
+       flex: 1;
+       border: 0px solid black; 
+    }
+    
 {% endblock %}
 
 {% block body_block %}
-
-This is the concert page<br />
+<div id="concertBody">
+    <div>Picture</div>
+    <div style="flex:3">
+        {% if concert %}
+            <p>Concert Name : {{concert.concertName}}</p>
+            <p>Band Id : {{concert.bandId}}</p>
+            <p>Concert Date : {{concert.date}}</p>
+            <p>Location : {{concert.location}}</p>
+        {% endif %}
+    </div>
+    <div style="align-self: flex-end;">    
+        <form id="booking" method="post" action="/booking/{{concert.concertId}}/"enctype="multipart/form-data">
+         {% csrf_token %}
+            <input type="submit" Value="Reserve Ticket">
+        </form>
+    </div>
+</div>
 
 {% endblock %}

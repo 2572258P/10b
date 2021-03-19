@@ -9,17 +9,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     pw_confirm = models.CharField(max_length=max_char_field)
     termsOfService = models.BooleanField(default=False)
+    weAreBand = models.BooleanField(default=False)
     uniqueId = models.IntegerField(default=0)
-    
-    
-    #website = models.URLField(blank=True)
-    #picture = models.ImageField(upload_to='profile_image',blank=True)
     
     def __str__(self):
         return self.user.username
-
-
-
 
 class TestModel(models.Model):
     tempId = models.IntegerField(default=0)
@@ -34,9 +28,9 @@ class ConcertModel(models.Model):
     tickets = models.IntegerField(default=0)
     
 class Band(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     bandId = models.IntegerField(default=0)
     bandName = models.CharField(max_length=max_char_field)
-    concertId = models.IntegerField(default=0)
     
 class Ticket(models.Model):
     ticketId = models.IntegerField(default=0)

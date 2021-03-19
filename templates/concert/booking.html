@@ -1,4 +1,5 @@
 {% extends 'concert/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
 
@@ -6,5 +7,22 @@ Booking Page
 {% endblock %}
 
 {% block body_block %}
-This is the booking Page<br />
+{% if concert %}
+<div>
+    <p>Concert ID : {{ concert.concertId }}</p>
+    <p>Name : {{ concert.concertName }}</p>
+    <p>BandId : {{ concert.bandId }}</p>
+    <p>Location : {{ concert.location }}</p>
+    <p>Date : {{ concert.date }}</p>
+    <p>Ticket ID : {{ concert.tickets }}</p>
+</div>
+
+<strong>Is it correct?</strong>
+<form id="booking" method="post" action="/booking/{{concert.concertId}}/"enctype="multipart/form-data">
+{% csrf_token %}
+<input type="submit" name="Yes" Value="Yes">
+<input type="submit" name="No" Value="No">
+</form>
+
+{% endif %}
 {% endblock %}

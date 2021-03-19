@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from concert.models import UserProfile,ConcertModel,TestModel
+from concert.models import UserProfile,ConcertModel,TestModel,Band
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -13,11 +13,18 @@ class UserForm(forms.ModelForm):
        
 class UserProfileForm(forms.ModelForm):
     pw_confirm = forms.CharField(widget=forms.PasswordInput())    
+    weAreBand = forms.BooleanField(initial=False,required=False)
     termsOfService = forms.BooleanField()
+    
     class Meta:
         model = UserProfile
-        fields = ('pw_confirm','termsOfService')
-        
+        fields = ('pw_confirm','weAreBand','termsOfService')
+
+class BandForm(forms.ModelForm):
+    bandName = forms.CharField(required=False)
+    class Meta:
+        model = Band
+        fields = ('bandName',)
 
 class ConcertForm(forms.ModelForm):
     class Meta:
