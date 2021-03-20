@@ -2,7 +2,7 @@
 from django import forms
 from concert.models import UserProfile,ConcertModel,TestModel,Band
 from django.contrib.auth.models import User
-from datetime import datetime as dt
+from datetime import datetime,date as dt
 import datetime
 
 class UserForm(forms.ModelForm):
@@ -28,10 +28,13 @@ class BandForm(forms.ModelForm):
         model = Band
         fields = ('bandName',)
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class ConcertForm(forms.ModelForm):
     concertName = forms.CharField()
     location = forms.CharField()
-    date = forms.DateField(initial=datetime.date.today())
+    date = forms.DateField(initial=datetime.date.today,widget=DateInput)
     class Meta:
         model = ConcertModel
         fields = ('concertName','location','date','img')

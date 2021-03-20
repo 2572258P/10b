@@ -4,7 +4,7 @@
 
 <meta charset="utf-8"/>
 <html>    
-    <head>    
+    <head>
     <style>
     *{font-family: arial, sans-serif;}
 
@@ -45,13 +45,13 @@
     div.copyright{
          font-size:80%
     }
-    
-    
     {% block style_block %}
     {% endblock %}
     
     </style>
     <title> Team10B Concert -{% block title_block %}concert!{% endblock %}</title>
+    {% block head_block %}
+    {% endblock %}
     </head>
 
     <body>    
