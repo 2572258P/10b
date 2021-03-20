@@ -34,12 +34,14 @@
             <p>Location : {{concert.location}}</p>
         {% endif %}
     </div>
-    <div style="align-self: flex-end;">    
+    {% if user.is_authenticated %}
+    <div style="align-self: flex-end;">
         <form id="booking" method="post" action="/booking/{{concert.concertId}}/"enctype="multipart/form-data">
          {% csrf_token %}
             <input type="submit" Value="Reserve Ticket">
         </form>
     </div>
+    {%endif%}
 </div>
 
 {% endblock %}

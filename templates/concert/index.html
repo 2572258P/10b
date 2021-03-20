@@ -14,11 +14,21 @@
 {% for concert in concertList %}
 <tr>
 <th>
-    Concert : {{ concert.concertName }}<br/>
-    BandId : {{ concert.bandId }}<br/>
+    Concert : {{ concert.concertName }}<br/>            
+    Band Name : {{ concert.band.bandName }}<br/>
     Location : {{ concert.location }}<br/>
-    Date : {{ concert.date }}<br/>
-    Ticket : {{ concert.tickets }}<br/>
+    Date : {{ concert.date }}    
+    
+    <script type="text/javascript">
+    var found = false
+    {% for ticket in tickets %}
+        {% if ticket.concertId == concert.concertId %}
+            if(found == false)
+                document.write('<div style="color:red">You have reserved this concert</div>')
+                found = true
+        {% endif %}
+    {% endfor %}
+    </script>
 </th>
 <th>
 <a href="concert/{{concert.concertId}}/">View Concert</a>

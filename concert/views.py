@@ -8,7 +8,9 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib import messages 
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 import random
+
 #from django.http import HttpResponse
 
 from datetime import datetime
@@ -18,7 +20,7 @@ def getTimeToInt():
     a = int(a.strftime('%Y%m%d%H%M%S'))
     return a
 
-
+@login_required
 def dev(request,cmd):
     if request.method == 'POST':
         if cmd == 'addConcert':
@@ -47,18 +49,23 @@ def index(request):
     context = {}
     context['concertList'] = concertList
     
-    if request.user.is_authenticated == True:
-        print("User Profile")
-        profile = UserProfile.objects.get(user=request.user)
+    if request.user.is_authenticated == True:        
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+        except:
+            profile = None            
+            
         if profile and profile.weAreBand:
             context['weAreBand'] = True
             
+        context['tickets'] = Ticket.objects.all()
     return render(request,'concert/index.html',context=context)
 
 def about(request):
     #context = {}
     return render(request,'concert/about.html')#,context=context)
 
+@login_required
 def booking(request,concertId):
     context = {}
     try:        
@@ -89,27 +96,27 @@ def concert(request,concertId):
         context['concert'] = None;
     return render(request,'concert/concert.html',context=context)
 
+@login_required
 def myaccount(request):    
     tickets = Ticket.objects.filter(user=request.user)
     return render(request,'concert/myaccount.html',context={'tickets':tickets})
 
+@login_required
 def concertAdd(request):
     concertAdded = False
     context = {}
     
-    if request.method == 'POST':                
-        if "concertAdd" in request.POST:
-            concert_form = ConcertForm(request.POST)
-            print(concert_form.errors)
-            if concert_form.is_valid():
-                concert = concert_form.save()
-                concert.concertId = getTimeToInt();
-                
-                foundBand = Band.objects.get(user=request.user)
-                
-                concert.bandId = foundBand.bandId
-                concert.save()
-                concertAdded = True
+    if request.method == 'POST' and "concertAdd" in request.POST:
+        
+        concert_form = ConcertForm(request.POST)            
+        if concert_form.is_valid():
+            foundBand = Band.objects.get(user=request.user)
+            concert = concert_form.save(commit=False)
+            concert.concertId = getTimeToInt();
+            concert.bandId = foundBand.bandId
+            concert.band = foundBand
+            concert.save()
+            concertAdded = True
             
     else:
         context['concertForm'] = ConcertForm();
@@ -152,12 +159,6 @@ def register(request):
                 band.user = user
                 band.save()
 
-            lastPF = UserProfile.objects.last();
-            if lastPF:
-                profile.uniqueId = lastPF.uniqueId + 1;
-            else:
-                profile.uniqueId = 0
-
             registered = True            
             username = user.username
             password = request.POST.get('pw_confirm')
@@ -195,6 +196,7 @@ def signin(request):
             
     return render(request,'concert/signin.html',context={'error_msg':error_msg})
 
+@login_required
 def signout(request):
     logout(request)    
     return redirect(reverse('concert:index'))  

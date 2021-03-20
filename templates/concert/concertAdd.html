@@ -14,7 +14,10 @@
 <a href="{% url 'concert:index' %}">Return to home</a><br />
 {% else %}
     <form id="concertAdd" method="post" action={% url 'concert:concertAdd'%} enctype="multipart/form-data">
-    {{concertForm.as_p}}    
+    <p>Concert Name : {{concertForm.concertName}}</p>
+    <p>Location : {{concertForm.location}}</p>
+    <p>Date : {{concertForm.date}}</p>
+    
      {% csrf_token %}
     <input type="submit" Value="Register Concert" name="concertAdd">
     </form>

@@ -18,18 +18,20 @@ class UserProfile(models.Model):
 class TestModel(models.Model):
     tempId = models.IntegerField(default=0)
     tempName = models.CharField(max_length=max_char_field)
-    
-class ConcertModel(models.Model):
-    concertId = models.IntegerField(default=0)
-    concertName = models.CharField(max_length=max_char_field)
-    bandId = models.IntegerField(default=0)
-    location = models.CharField(max_length=max_char_field)
-    date = models.DateField()
-    
+
 class Band(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     bandId = models.IntegerField(default=0)
     bandName = models.CharField(max_length=max_char_field)
+    
+class ConcertModel(models.Model):
+    
+    concertId = models.IntegerField(default=0)
+    concertName = models.CharField(max_length=max_char_field)
+    bandId = models.IntegerField(default=0)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE,default=0)
+    location = models.CharField(max_length=max_char_field)
+    date = models.DateField()
     
 class Ticket(models.Model):
     ticketId = models.IntegerField(default=0)
