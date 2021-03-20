@@ -11,8 +11,6 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username','password','first_name','last_name')
         
-        
-       
 class UserProfileForm(forms.ModelForm):
     pw_confirm = forms.CharField(widget=forms.PasswordInput())    
     weAreBand = forms.BooleanField(initial=False,required=False)
