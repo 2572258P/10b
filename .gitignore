@@ -60,9 +60,9 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-concert/migrations/0001_initial.*
-media/
-!media/concert_img/default*.png
+concert/migrations/*_initial.*
+media/concert_img/
+
 
 # Flask stuff:
 instance/
