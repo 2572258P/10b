@@ -43,7 +43,6 @@ def dev(request,cmd):
         
     return render(request,'concert/dev.html')
 
-# Create your views here.
 def index(request):
     concertList = ConcertModel.objects.order_by('-date')    
     context = {}
@@ -58,7 +57,7 @@ def index(request):
         if profile and profile.weAreBand:
             context['weAreBand'] = True
             
-        context['tickets'] = Ticket.objects.all()
+        context['tickets'] = Ticket.objects.filter(user=request.user)
     return render(request,'concert/index.html',context=context)
 
 def about(request):
@@ -106,15 +105,16 @@ def concertAdd(request):
     concertAdded = False
     context = {}
     
-    if request.method == 'POST' and "concertAdd" in request.POST:
-        
-        concert_form = ConcertForm(request.POST)            
-        if concert_form.is_valid():
+    if request.method == 'POST' and "concertAdd" in request.POST:        
+        concert_form = ConcertForm(request.POST)
+        if concert_form.is_valid():               
             foundBand = Band.objects.get(user=request.user)
             concert = concert_form.save(commit=False)
             concert.concertId = getTimeToInt();
             concert.bandId = foundBand.bandId
             concert.band = foundBand
+            if 'img' in request.FILES:
+                concert.img = request.FILES['img']
             concert.save()
             concertAdded = True
             

@@ -24,12 +24,12 @@ class Band(models.Model):
     bandId = models.IntegerField(default=0)
     bandName = models.CharField(max_length=max_char_field)
     
-class ConcertModel(models.Model):
-    
+class ConcertModel(models.Model):    
     concertId = models.IntegerField(default=0)
     concertName = models.CharField(max_length=max_char_field)
     bandId = models.IntegerField(default=0)
-    band = models.ForeignKey(Band, on_delete=models.CASCADE,default=0)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE,default=0)    
+    img = models.ImageField(upload_to='concert_img',blank=True)    
     location = models.CharField(max_length=max_char_field)
     date = models.DateField()
     

@@ -7,6 +7,9 @@ Created on Tue Mar  2 15:47:44 2021
 
 from django.urls import path
 from concert import views
+from team10b import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 app_name = 'concert' 
 #when URLs are referenced by others such as 'rango:url_name' the left side of colon 'rango' is from app_name
@@ -23,3 +26,6 @@ urlpatterns = [
         path('signout/',views.signout,name = 'signout'),
         path('dev/<slug:cmd>/',views.dev,name = 'dev')
         ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

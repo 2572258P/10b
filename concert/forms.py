@@ -34,7 +34,7 @@ class ConcertForm(forms.ModelForm):
     date = forms.DateField(initial=datetime.date.today())
     class Meta:
         model = ConcertModel
-        fields = ('concertName','location','date')
+        fields = ('concertName','location','date','img')
         
 class TestForm(forms.ModelForm):
     concertId = forms.IntegerField(label="ConcertId")
