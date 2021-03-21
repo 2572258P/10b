@@ -36,6 +36,8 @@ class ConcertForm(forms.ModelForm):
     class Meta:
         model = ConcertModel
         fields = ('concertName','location','date','img')
+
+
         
 class TestForm(forms.ModelForm):
     concertId = forms.IntegerField(label="ConcertId")

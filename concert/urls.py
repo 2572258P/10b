@@ -24,7 +24,8 @@ urlpatterns = [
         path('register/',views.register,name = 'register'),
         path('signin/',views.signin,name = 'signin'),
         path('signout/',views.signout,name = 'signout'),
-        path('dev/<slug:cmd>/',views.dev,name = 'dev')
+        path('dev/<slug:cmd>/',views.dev,name = 'dev'),
+        path('SearchResult/',views.search,name = 'searchResult')
         ]
 
 urlpatterns += staticfiles_urlpatterns()

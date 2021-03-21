@@ -1,10 +1,24 @@
 {% extends 'concert/base.html' %}
 
+{% block head_block %}
+<script>
+function concertReserved(tickets,concertId)
+{
+    for(i = 0;i < tickets.length;i++)
+    {
+        if(tickets[i] == concertId)
+            return true
+    }
+    return false
+}
+</script>
+{% endblock %}
 
 {% block body_block %}
+<br/>
 
 {% if weAreBand %}
-<a href="{% url 'concert:concertAdd' %}"><button>Register new concert</button></a>
+    <a href="{% url 'concert:concertAdd' %}"><button>Register new concert</button></a>
 {% endif %}
 
 <table>
@@ -17,23 +31,25 @@
     Concert : {{ concert.concertName }}<br/>            
     Band Name : {{ concert.band.bandName }}<br/>
     Location : {{ concert.location }}<br/>
-    Date : {{ concert.date }}    
+    Date : {{ concert.date }}
     
-    <script type="text/javascript">
-    var found = false
-    {% for ticket in tickets %}
-        {% if ticket.concertId == concert.concertId %}
-            if(found == false)
-                document.write('<div style="color:red">You have reserved this concert</div>')
-                found = true
-        {% endif %}
-    {% endfor %}
+     <script type="text/javascript">
+        var concertId = {{concert.concertId}}        
+        var tks = []
+        {% for t in tickets %}           
+            tks.push( {{t.concertId}} )
+        {% endfor %}
+        if(concertReserved(tks,concertId) == true)
+            document.write('<div style="color:red">You have reserved this concert</div>')                    
+        
     </script>
 </th>
-<th>
-<a href="concert/{{concert.concertId}}/">View Concert</a>
-</th>
+    <th>
+        <a href="concert/{{concert.concertId}}/">View Concert</a>
+    </th>
 </tr>
 {% endfor %}
 </table>
+
+
 {% endblock %}

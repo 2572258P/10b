@@ -15,17 +15,20 @@
       display: flex;
       align-items: top;
     }
-    #topmenu div {
-       flex: 1;
+    #topmenu div {       
        border: 0px solid black; 
        padding-left:20px;
        padding-top:80px;
     }
+    img.logo{
+         width:100%;
+         height:100%;
+         object-fit:contain;
+    }
     table {
       border-collapse: collapse;
       width: 70%;
-    }
-    
+    }    
     td, th {
       border: 1px solid #dddddd;
       text-align: left;
@@ -33,45 +36,58 @@
     }
     tr.title{
         background-color:grey;
-    }
-    
+    }    
     tr:nth-child(even) {
       background-color: #dddddd;
     }
-    hr.bottom {
-    border: 1px solid;
+    hr.copyline {
+        border: 1px solid;
+    }    
+    div.topWide{
+        flex:2;
+        padding-left:0px;
     }
-    
+    div.topNarrow{
+        flex:1;
+        padding-top:0px;
+    }
     div.copyright{
          font-size:80%
     }
-    {% block style_block %}
-    {% endblock %}
     
+    {% block style_block %}
+        <!-- you can add styles with this block for each template page-->
+    {% endblock %}
     </style>
-    <title> Team10B Concert -{% block title_block %}concert!{% endblock %}</title>
+    
+    <title> Team10B Concert -{% block title_block %} Music is life {% endblock %}</title>
     {% block head_block %}
+        <!-- The block provides adding java script or other implementation for each template page-->
     {% endblock %}
     </head>
 
-    <body>    
+    <body>
       <div id="topmenu">
-          <div style="padding-top:0px;">
+          <div class="topNarrow">
               {% block top1_block %}
                   <a href="{% url 'concert:index' %}">
-                  <img src="{% static 'logo.jpg' %}" alt="logo image" style="width:100%;height:100%;object-fit:contain;"></a>
+                  <img class="logo" src="{% static 'logo.jpg' %}" alt="logo image"></a>
               {% endblock %}
           </div>
-          <div>{% block top2_block %}{% endblock %}</div>
-          <div style="flex:2;padding-left:0px;">
+          <div class="topNarrow">
+              {% block top2_block %}
+              {% endblock %}   
+          </div>
+          <div class="topWide">
               {% block top3_block %}
-                <form action="{% url 'concert:index' %}">
-                  <input type="text" id="fname" name="fname">
-                  <input type="submit" value="Search">
+                <form method="post" action="{% url 'concert:searchResult' %}">
+                {% csrf_token %}
+                  <input type="text" name="searchKeyword">
+                  <input type="submit" value="Search Concert">
                 </form>
               {% endblock %}
           </div>
-          <div>
+          <div class="topNarrow">
               {% block top4_block %}
                 {% if user.is_authenticated %}
                     <a href="{% url 'concert:signout' %}">Sign out</a>
@@ -80,7 +96,7 @@
                 {% endif %}
               {% endblock %}
           </div>
-          <div>      
+          <div class="topNarrow">      
             {% block top5_block %}
                 {% if user.is_authenticated %}
                     <a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
@@ -89,11 +105,12 @@
                 {% endif %}
             {% endblock %}
           </div>      
-      </div>      
+      </div>
     {% block body_block %}
     {% endblock %}
+
     
-    <br/><hr class="bottom">
+    <br/><hr class="copyline"><br/>
     
     <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Team 10b Project (2021)
     
@@ -109,9 +126,7 @@
         {% else %}
             <a href="{% url 'concert:signin' %}">Sign in</a>&nbsp
         {% endif %}
-            <a href="/dev/1/">Development</a>&nbsp
-    		
-		</div>
-		
+            <a href="/dev/1/">Development</a>&nbsp    		
+		</div>		
    </body>
 </html>

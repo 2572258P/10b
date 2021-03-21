@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from django.contrib import messages 
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Q
 import random
 
 #from django.http import HttpResponse
@@ -37,10 +39,7 @@ def dev(request,cmd):
                     Id = concert.concertId
                 Ticket.objects.get_or_create(ticketId=ticketId,user=request.user,concertId=Id)
             else:
-                print('You need to be authenticated')
-                
-            
-        
+                print('You need to be authenticated')        
     return render(request,'concert/dev.html')
 
 def index(request):
@@ -62,6 +61,11 @@ def index(request):
 
 def about(request):
     #context = {}
+    if request.method == 'POST' and "searchStart" in request.POST:
+        keyword = request.POST.get('keyWord')
+        print("**********************")
+        print(keyword)
+        
     return render(request,'concert/about.html')#,context=context)
 
 @login_required
@@ -71,7 +75,6 @@ def booking(request,concertId):
         foundConcert = ConcertModel.objects.get(concertId=concertId)
         context['concert'] = foundConcert
     except:     
-        print('damm')
         context['concert'] = None
         
     if request.method == 'POST':
@@ -94,6 +97,17 @@ def concert(request,concertId):
     except:
         context['concert'] = None;
     return render(request,'concert/concert.html',context=context)
+
+def search(request):
+    found = []
+    if request.method == 'POST':
+        keyword = request.POST.get('searchKeyword')       
+        found = ConcertModel.objects.filter(location__contains=keyword) | ConcertModel.objects.filter(concertName__contains=keyword)| ConcertModel.objects.filter(band__bandName__contains=keyword)
+            
+        
+
+        
+    return render(request,'concert/searchResult.html',context={"searchResults":found})
 
 @login_required
 def myaccount(request):    

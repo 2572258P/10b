@@ -13,16 +13,16 @@
 <a href="{% url 'concert:index' %}">Return to home</a><br />
 {% else %}
     <form id="concertAdd" method="post" action={% url 'concert:concertAdd'%} enctype="multipart/form-data">
-    <p>Concert Image : {{concertForm.img}} <br/>
-    * If you don't add an image, default images will be used.</p>
+        <p>Concert Image : {{concertForm.img}} <br/>
+        * If you don't add an image, default images will be used.</p>
+        
+        <p>Concert Name : {{concertForm.concertName}}</p>
+        <p>Location : {{concertForm.location}}</p>    
     
-    <p>Concert Name : {{concertForm.concertName}}</p>
-    <p>Location : {{concertForm.location}}</p>    
-
-    {{ concertForm.date }}
-    
-    {% csrf_token %}
-    <input type="submit" Value="Register Concert" name="concertAdd">
+        {{ concertForm.date }}
+        
+        {% csrf_token %}
+        <input type="submit" Value="Register Concert" name="concertAdd">
     </form>
 {% endif %}
 
