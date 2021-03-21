@@ -1,0 +1,25 @@
+{% extends 'concert/base.html' %}
+
+{% block body_block %}
+<br/>
+
+<table>
+<tr class="title">
+    <th>Found Result : {{searchResults.count}} </th><th></th>
+</tr>
+
+{%for result in searchResults %}
+    <tr>
+        <th>
+            Concert : {{ result.concertName }}<br/>            
+            Band Name : {{ result.band.bandName }}<br/>
+            Location : {{ result.location }}<br/>
+            Date : {{ result.date }}
+        </th>
+        <th><a href="../concert/{{result.concertId}}/">View Concert</a></th>
+</tr>    
+{% endfor %}
+
+</table>
+{%endblock%}
+
