@@ -34,6 +34,14 @@
       text-align: left;
       padding: 8px;
     }
+	.center{
+		position: relative;
+		float: center;
+		text-align: center;
+		width: 400px;
+		border: 3px solid green;
+		padding: 20px;
+    }	
     tr.title{
         background-color:grey;
     }    
@@ -57,12 +65,50 @@
     
     {% block style_block %}
         <!-- you can add styles with this block for each template page-->
+	body {
+	font-family: arial;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	}
+
+
+	#popup-1 {
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+	height: 100vh;
+	width: 100%;
+	}
+
+	.popup-content {
+	position: relative;
+	padding: 20px;
+	margin: 0 auto;
+	background-color: white;
+	width: 400px;
+	top: 5vh;
+	}
+		
     {% endblock %}
     </style>
-    
+   
     <title> Team10B Concert -{% block title_block %} Music is life {% endblock %}</title>
     {% block head_block %}
+	<script>
         <!-- The block provides adding java script or other implementation for each template page-->
+		function conditionPopUp(){
+		var popup1 = document.getElementById("popup-1")
+		var openPopup1 = document.getElementById("open-popup-1")
+		var closePopup1 = document.getElementById('close-popup-1')		
+		openPopup1.addEventListener('click', () => {
+			popup1.style.display = "block";
+			})
+		closePopup1.addEventListener('click', () => {
+			popup1.style.display = "none";
+			})
+		}
+	</script>	
     {% endblock %}
     </head>
 
