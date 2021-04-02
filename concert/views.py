@@ -2,20 +2,12 @@ from django.shortcuts import render
 from concert.forms import UserForm,UserProfileForm,ConcertForm,BandForm #TestForm
 from concert.models import ConcertModel,Ticket,UserProfile,Band
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.contrib import messages 
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector
-from django.db.models import Q
 import random
 
-#from django.http import HttpResponse
-
-from datetime import datetime
 
 def getTimeToInt():    
     a = datetime.now()
@@ -173,8 +165,7 @@ def register(request):
                 band.user = user
                 band.save()
 
-            registered = True            
-            username = user.username
+            registered = True
             password = request.POST.get('pw_confirm')
             authenticate(username=request.user,password=password)                
             login(request,user)

@@ -24,7 +24,7 @@ class Band(models.Model):
     bandId = models.IntegerField(default=0)
     bandName = models.CharField(max_length=max_char_field)
     
-class ConcertModel(models.Model):    
+class ConcertModel(models.Model): #concert is a sensitive keyword, therefore 'Model' suffix added  
     concertId = models.IntegerField(default=0)
     concertName = models.CharField(max_length=max_char_field)
     bandId = models.IntegerField(default=0)
