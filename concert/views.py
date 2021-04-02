@@ -31,26 +31,45 @@ def index(request):
         context['tickets'] = Ticket.objects.filter(user=request.user)
     return render(request,'concert/index.html',context=context)
 
-def about(request):
-    #context = {}
+def about(request):    
     if request.method == 'POST' and "searchStart" in request.POST:
         keyword = request.POST.get('keyWord')
         
     return render(request,'concert/about.html')
 
 @login_required
+def cancelBooking(request,concertId):
+    try:
+        ticket = Ticket.objects.filter(user=request.user,concertId=concertId).get()
+        if ticket != None:
+            concert = ConcertModel.objects.get(concertId=ticket.concertId)
+    except:
+        ticket = None
+        concert = None
+        
+    context = {'ticket':ticket,'concert':concert}
+    
+    if request.method == 'POST':
+        if 'Yes' in request.POST:            
+            for ticket in Ticket.objects.filter(concertId=concertId,user=request.user):
+                ticket.delete()
+        return redirect(reverse('concert:index'))
+        
+    return render(request,'concert/cancelBooking.html',context=context)    
+
+@login_required
 def booking(request,concertId):
     context = {}
     try:        
-        foundConcert = ConcertModel.objects.get(concertId=concertId)
-        context['concert'] = foundConcert
+        concert = ConcertModel.objects.get(concertId=concertId)
+        context['concert'] = concert
     except:     
         context['concert'] = None
         
     if request.method == 'POST':
         if 'Yes' in request.POST:
             ticketId = getTimeToInt()
-            concertId = foundConcert.concertId
+            concertId = concert.concertId
             user = request.user    
             Ticket.objects.get_or_create(ticketId=ticketId,concertId=concertId,user=user)
             return redirect('/')
@@ -187,7 +206,6 @@ def deleteAccount(request):
         if 'Yes' in request.POST:            
             user = User.objects.filter(username=request.user.username)
             if user != None:
-                print(str(user))
                 user.delete()
                 logout(request)
                 

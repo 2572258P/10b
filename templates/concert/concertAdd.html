@@ -2,9 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-{% if concert %}
-    Concert Add
-{% endif %}
+    Register new concert
 {% endblock %}
 
 {%block body_block%}
@@ -19,7 +17,7 @@
         <p>Concert Name : {{concertForm.concertName}}</p>
         <p>Location : {{concertForm.location}}</p>    
     
-        {{ concertForm.date }}
+        <p>Date : {{ concertForm.date }}</p>
         
         {% csrf_token %}
         <input type="submit" Value="Register Concert" name="concertAdd">

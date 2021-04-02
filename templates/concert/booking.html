@@ -7,11 +7,12 @@ Booking Page
 {% endblock %}
 
 {% block body_block %}
-{% if concert %}
+{% if concert and concert.band %}
 <div>
-    <p>CID : {{ concert.concertId }}</p>
+    <p>Concert Id : {{ concert.concertId }}</p>
     <p>Concert Name : {{ concert.concertName }}</p>
-    <p>BandId : {{ concert.bandId }}</p>
+    <p>Band Id : {{ concert.bandId }}</p>
+    <p>Band Name : {{ concert.band.bandName }}</p>
     <p>Location : {{ concert.location }}</p>
     <p>Date : {{ concert.date }}</p>
 </div>

@@ -32,7 +32,8 @@ Email      : {{user.username}}
         ConcertId :{{ticket.concertId}}<br/>
         </th>
         <th>
-        <a href="/concert/{{ticket.concertId}}/">View Concert</a>
+        <a href="/concert/{{ticket.concertId}}/">View Concert</a>&ensp;
+        <a href="/cancelBooking/{{ticket.concertId}}/">Cancel</a>
         </th>
     </tr>
 {% endfor %}

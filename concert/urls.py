@@ -18,6 +18,7 @@ urlpatterns = [
         path('',views.index,name = 'index'),
         path('about/',views.about,name = 'about'),
         path('booking/<int:concertId>/',views.booking,name = 'booking'),
+        path('cancelBooking/<int:concertId>/',views.cancelBooking,name = 'cancelBooking'),
         path('concert/<int:concertId>/',views.concert,name = 'concert'),
         path('concertAdd/',views.concertAdd,name = 'concertAdd'),
         path('myaccount/',views.myaccount,name = 'myaccount'),
