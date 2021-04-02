@@ -158,21 +158,6 @@
     
     <br/><hr class="copyline"><br/>
     
-    <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Team 10b Project (2021)
-    
-     <div style="padding-top: 30px; position: relative; text-align: left">
-         <div style="font-size:12px;color:red">
-        This bottom line is just for test efficiency all links are in one place - will be removed<br/></div>         
-    		<a href="{% url 'concert:index' %}">Home </a>&nbsp
-    		<a href="{% url 'concert:about' %}">About </a>&nbsp    		
-    		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
-    		<a href="{% url 'concert:register' %}">Register </a>&nbsp    		
-    		{% if user.is_authenticated %}
-            <a href="{% url 'concert:signout' %}">Sign out</a>&nbsp
-        {% else %}
-            <a href="{% url 'concert:signin' %}">Sign in</a>&nbsp
-        {% endif %}
-            <a href="/dev/1/">Development</a>&nbsp    		
-		</div>		
+    <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Lab Group 10,Team B Project (2021)</div>
    </body>
 </html>

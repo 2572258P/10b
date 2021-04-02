@@ -6,33 +6,12 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-import random
 
 
 def getTimeToInt():    
     a = datetime.now()
     a = int(a.strftime('%Y%m%d%H%M%S'))
     return a
-
-@login_required
-def dev(request,cmd):
-    if request.method == 'POST':
-        if cmd == 'addConcert':
-            Id = getTimeToInt()
-            name = 'Glasgow party' + str(random.randint(1,10000))
-            
-            ConcertModel.objects.get_or_create(date=datetime.now(),concertId=Id,concertName=name);                        
-        if cmd == 'addTicket':
-            if request.user.is_authenticated:
-                ticketId = random.randint(1,10000)
-                concert = ConcertModel.objects.last()
-                Id = 0
-                if concert:
-                    Id = concert.concertId
-                Ticket.objects.get_or_create(ticketId=ticketId,user=request.user,concertId=Id)
-            else:
-                print('You need to be authenticated')        
-    return render(request,'concert/dev.html')
 
 def index(request):
     concertList = ConcertModel.objects.order_by('-date')    
@@ -94,11 +73,8 @@ def search(request):
     found = []
     if request.method == 'POST':
         keyword = request.POST.get('searchKeyword')       
-        found = ConcertModel.objects.filter(location__contains=keyword) | ConcertModel.objects.filter(concertName__contains=keyword)| ConcertModel.objects.filter(band__bandName__contains=keyword)
-            
-        
-
-        
+        found = ConcertModel.objects.filter(location__contains=keyword) | ConcertModel.objects.filter(concertName__contains=keyword)| ConcertModel.objects.filter(band__bandName__contains=keyword)          
+                
     return render(request,'concert/searchResult.html',context={"searchResults":found})
 
 @login_required
