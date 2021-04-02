@@ -32,7 +32,9 @@ This is the register Page <br />
     <p>Last name:{{ user_form.last_name }}</p>
     <p>Email:{{ user_form.username }}</p>
     <p>Password:{{ user_form.password }}</p>
-    <p>Password confirm:{{ profile_form.pw_confirm }}</p>    
+    <p>Password confirm:{{ profile_form.pw_confirm }}</p>
+    <p>{{ profile_form.weAreBand }} Check, if you are in a band, then you can register concerts</p>
+    <p>Band Name : {{band_form.bandName}}<br/> You need to set the band name when you check you are a band</p>        
     <p>{{ profile_form.termsOfService }} Terms of service :	<button type="button" onclick= conditionPopUp() id="open-popup-1">Open Popup</button></p>    
 	
     {% for error in custom_error_msg %}

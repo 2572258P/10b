@@ -35,3 +35,4 @@ class ConcertForm(forms.ModelForm):
     class Meta:
         model = ConcertModel
         fields = ('concertName','location','date','img') 
+

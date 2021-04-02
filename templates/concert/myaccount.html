@@ -22,21 +22,21 @@ Email      : {{user.username}}
 
 {% block body_block %}
 <table>
-<tr class="title">
-<th>Your Ticket :</th><th></th>
-</tr>
+    <tr class="title">
+        <th>Your Ticket :</th><th></th>
+    </tr>
 {% for ticket in tickets %}
-<tr>
-<th>
-TicketId  :{{ticket.ticketId}}<br/>
-ConcertId :{{ticket.concertId}}<br/>
-</th>
-<th>
-<a href="/concert/{{ticket.concertId}}/">View Concert</a>
-</th>
-</tr>
+    <tr>
+        <th>
+        TicketId  :{{ticket.ticketId}}<br/>
+        ConcertId :{{ticket.concertId}}<br/>
+        </th>
+        <th>
+        <a href="/concert/{{ticket.concertId}}/">View Concert</a>
+        </th>
+    </tr>
 {% endfor %}
-
 </table>
+<a href={% url 'concert:deleteAccount' %}>Delete my account</a>
 
 {% endblock %}

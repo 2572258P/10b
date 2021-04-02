@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from concert.forms import UserForm,UserProfileForm,ConcertForm,BandForm #TestForm
-from concert.models import ConcertModel,Ticket,UserProfile,Band
+from concert.models import ConcertModel,Ticket,UserProfile,Band,User
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.shortcuts import redirect
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def getTimeToInt():    
@@ -34,10 +35,8 @@ def about(request):
     #context = {}
     if request.method == 'POST' and "searchStart" in request.POST:
         keyword = request.POST.get('keyWord')
-        print("**********************")
-        print(keyword)
         
-    return render(request,'concert/about.html')#,context=context)
+    return render(request,'concert/about.html')
 
 @login_required
 def booking(request,concertId):
@@ -116,8 +115,6 @@ def register(request):
         band_form = BandForm(request.POST)
         passedError = True
         
-        print(request.POST.get('weAreBand'))
-        
         if request.POST.get('pw_confirm') != request.POST.get('password'):
             custom_error_msg.append('Please, check the password confirmation')
             passedError = False
@@ -179,9 +176,29 @@ def signin(request):
 
 @login_required
 def signout(request):
-    logout(request)    
+    logout(request)
     return redirect(reverse('concert:index'))  
-        
-        
-        
-        
+
+@login_required
+def deleteAccount(request):
+    confirmedToDelete = False
+    
+    if request.method == 'POST':
+        if 'Yes' in request.POST:            
+            user = User.objects.filter(username=request.user.username)
+            if user != None:
+                print(str(user))
+                user.delete()
+                logout(request)
+                
+                confirmedToDelete = True
+        else:                
+            return redirect(reverse('concert:index'))
+            
+    
+    context = {"deleteConfirmed":confirmedToDelete}
+    return render(request,'concert/deleteAccount.html',context)
+    
+    
+    
+    

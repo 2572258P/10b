@@ -21,6 +21,7 @@ urlpatterns = [
         path('concert/<int:concertId>/',views.concert,name = 'concert'),
         path('concertAdd/',views.concertAdd,name = 'concertAdd'),
         path('myaccount/',views.myaccount,name = 'myaccount'),
+        path('deleteAccount/',views.deleteAccount,name = 'deleteAccount'),
         path('register/',views.register,name = 'register'),
         path('signin/',views.signin,name = 'signin'),
         path('signout/',views.signout,name = 'signout'),

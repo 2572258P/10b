@@ -154,10 +154,16 @@
       </div>
     {% block body_block %}
     {% endblock %}
-
-    
-    <br/><hr class="copyline"><br/>
-    
+    <div style="padding-top: 30px; position: relative; text-align: left">
+    		<a href="{% url 'concert:index' %}">Home </a>&nbsp
+    		<a href="{% url 'concert:about' %}">About </a>&nbsp
+    		{% if user.is_authenticated %}
+            <a href="{% url 'concert:signout' %}">Sign out</a>&nbsp
+        {% else %}
+            <a href="{% url 'concert:signin' %}">Sign in</a>&nbsp
+        {% endif %}
+		</div>    
+    <hr class="copyline">
     <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Lab Group 10,Team B Project (2021)</div>
    </body>
 </html>
