@@ -10,10 +10,12 @@
 
 {% block style_block %}
     #concertBody {
+      opacity: 0;
       width: 70%;
       border: 0px solid black; 
       display: flex;
              align-items: bottom;
+             
       
     }
     #concertBody div {
@@ -39,7 +41,7 @@
     
 {% endblock %}
 
-{% block head_block %} <!-- Adding java script to the head -->
+{% block head_block %} <!-- Adding embedding java script to the head -->
     <!-- Random selection of default images -->
     <script type="text/javascript"> 
         function ShowRandomDefaultImage() {
@@ -54,12 +56,12 @@
             document.write(imgTag)
         }    
     </script>
-    <script src="{{STATIC_URL}}/static/jquery/jquery.min.js"></script>
+    <script src="{{STATIC_URL}}/static/jquery/jquery.min.js"></script> <!-- loading Jquery only when it is needed-->
     <script>
-        $(document).ready(function(){
-             $("#concertBody").animate({ opacity: 0 }, 0);
+        $(document).ready(function(){            
              $("#concertBody").animate({ opacity: 1 }, 500);
         });
+        
     </script>    
 {% endblock %}
 

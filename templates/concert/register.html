@@ -4,8 +4,8 @@
 This is the register Page <br />
 {% endblock %}
 
-{% block head_block %}
-<script src="{{STATIC_URL}}/static/jquery/jquery.min.js"></script>
+{% block head_block %}<!-- Adding embedding java script to the head -->
+<script src="{{STATIC_URL}}/static/jquery/jquery.min.js"></script> <!-- loading Jquery only when it is needed-->
 <script>
     $(document).ready(function()
     {
