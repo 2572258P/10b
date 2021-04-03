@@ -8,12 +8,6 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-
-def getTimeToInt():    
-    a = datetime.now()
-    a = int(a.strftime('%Y%m%d%H%M%S'))
-    return a
-
 def index(request):
     concertList = ConcertModel.objects.order_by('-date')    
     context = {}
@@ -231,4 +225,7 @@ def deleteAccount(request):
     
     
     
-    
+def getTimeToInt():    
+    a = datetime.now()
+    a = int(a.strftime('%Y%m%d%H%M%S'))
+    return a

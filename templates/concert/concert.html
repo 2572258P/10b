@@ -31,8 +31,8 @@
         align-self:flex-end;
     }
     img.concertImg{
-        width:100%;
-        height:100%;
+        width:250px;
+        height:300px;
         object-fit:contain;
     }
     input.reserve{
@@ -41,7 +41,7 @@
     
 {% endblock %}
 
-{% block head_block %} <!-- Adding embedding java script to the head -->
+{% block javascript %} <!-- Adding embedding java script to the head -->
     <!-- Random selection of default images -->
     <script type="text/javascript"> 
         function ShowRandomDefaultImage() {
@@ -68,7 +68,7 @@
 {% block body_block %}
 <div id="concertBody">
     {% if concert.img %}
-        <img class="concertImg" src={{concert.img.url}}></div>
+        <img class="concertImg" src={{concert.img.url}}>
     {% else %}
         <script type="text/javascript"> ShowRandomDefaultImage() </script>
     {% endif %}
