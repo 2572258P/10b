@@ -60,36 +60,40 @@
     }
     div.copyright{
          font-size:80%
-    }
-    
-    {% block style_block %}
-        <!-- you can add styles with this block for each template page-->
+    }    
+
 	body {
 	font-family: arial;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	}
+	
+	a.mhl:link, a.mhl:visited {
+      background-color: #B20000;
+      color: #FFFFFF;
+      border: 2px solid #712F2F;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-
-	#popup-1 {
-	display: none;
-	background-color: rgba(0,0,0,0.5);
-	position: absolute;
-	height: 100vh;
-	width: 100%;
-	}
-
-	.popup-content {
-	position: relative;
-	padding: 20px;
-	margin: 0 auto;
-	background-color: white;
-	width: 400px;
-	top: 5vh;
-	}
-		
+    a.mhl:hover, a.sh:active {
+      background-color: #BF1212;
+      color: #FFFFFF;
+    }    
+   
+    a.bm:link {color:#AD0000;text-decoration:none;}
+    a.bm:visited {color:#AD0000;text-decoration:none;}
+    a.bm:hover {text-decoration:underline;}
+    
+    
+	{% block style_block %}
+        <!-- you can add styles with this block for each template page-->
     {% endblock %}
+		
+    
     </style>
    
     <title> Team10B Concert -{% block title_block %} Music is life {% endblock %}</title>
@@ -125,18 +129,18 @@
           <div class="topNarrow">
               {% block top4_block %}
                 {% if user.is_authenticated %}
-                    <a href="{% url 'concert:signout' %}">Sign out</a>
+                    <a href="{% url 'concert:signout' %}" class="mhl">Sign out</a>
                 {% else %}
-                    <a href="{% url 'concert:signin' %}">Sign in</a>
+                    <a href="{% url 'concert:signin' %}" class="mhl">Sign in</a>
                 {% endif %}
               {% endblock %}
           </div>
           <div class="topNarrow">      
             {% block top5_block %}
                 {% if user.is_authenticated %}
-                    <a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
+                    <a href="{% url 'concert:myaccount' %}" class="mhl">MyAccount </a>&nbsp
                 {% else %}
-                    <a href="{% url 'concert:register' %}">Register </a>&nbsp
+                    <a href="{% url 'concert:register' %}" class="mhl">Register </a>&nbsp
                 {% endif %}
             {% endblock %}
           </div>      
@@ -144,12 +148,12 @@
     {% block body_block %}
     {% endblock %}
     <div style="padding-top: 30px; position: relative; text-align: left">
-    		<a href="{% url 'concert:index' %}">Home </a>&nbsp
-    		<a href="{% url 'concert:about' %}">About </a>&nbsp
+    		<a href="{% url 'concert:index' %}" class="bm">Home </a>&nbsp
+    		<a href="{% url 'concert:about' %}" class="bm">About </a>&nbsp
     		{% if user.is_authenticated %}
-            <a href="{% url 'concert:signout' %}">Sign out</a>&nbsp
+            <a href="{% url 'concert:signout' %}" class="bm">Sign out</a>&nbsp
         {% else %}
-            <a href="{% url 'concert:signin' %}">Sign in</a>&nbsp
+            <a href="{% url 'concert:signin' %}" class="bm">Sign in</a>&nbsp
         {% endif %}
 		</div>    
     <hr class="copyline">

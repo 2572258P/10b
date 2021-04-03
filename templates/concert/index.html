@@ -2,17 +2,24 @@
 
 {% block javascript %}
 <script>
-function concertReserved(tickets,concertId)
-{
-    for(i = 0;i < tickets.length;i++)
+    function concertReserved(tickets,concertId)
     {
-        if(tickets[i] == concertId)
-            return true
+        for(i = 0;i < tickets.length;i++)
+        {
+            if(tickets[i] == concertId)
+                return true
+        }
+        return false
     }
-    return false
-}
 </script>
 {% endblock %}
+
+{% block style_block %}
+    a.vc:link {color:#AD0000;text-decoration:none;}
+    a.vc:visited {color:#9A9292;text-decoration:none;}
+    a.vc:hover {text-decoration:underline;}
+{% endblock %}
+    
 
 {% block body_block %}
 <br/>
@@ -45,7 +52,7 @@ function concertReserved(tickets,concertId)
     </script>
 </th>
     <th>
-        <a href="concert/{{concert.concertId}}/">View Concert</a>
+        <a href="concert/{{concert.concertId}}/" class="vc">View Concert</a>
     </th>
 </tr>
 {% endfor %}
