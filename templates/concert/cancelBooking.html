@@ -23,9 +23,9 @@ Cancel Booking conformation
 
 
 <form id="CancelBooking" method="post" action="/cancelBooking/{{ concert.concertId }}/"enctype="multipart/form-data">
-{% csrf_token %}
-<input type="submit" name="Yes" Value="Yes">
-<input type="submit" name="No" Value="No">
+    {% csrf_token %}
+    <input type="submit" name="Yes" Value="Yes">
+    <input type="submit" name="No" Value="No">
 </form>
 
 {% endblock %}

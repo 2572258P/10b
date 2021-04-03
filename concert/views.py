@@ -95,10 +95,22 @@ def search(request):
                 
     return render(request,'concert/searchResult.html',context={"searchResults":found})
 
+
 @login_required
 def myaccount(request):    
     tickets = Ticket.objects.filter(user=request.user)
-    return render(request,'concert/myaccount.html',context={'tickets':tickets})
+    concerts = {}
+    context = {}
+    context['tickets'] = tickets
+    context['concerts'] = concerts
+    
+    for ticket in tickets:
+        try:
+            concerts[ticket.concertId] = ConcertModel.objects.get(concertId=ticket.concertId)            
+        except:
+            concerts[ticket.concertId] = None
+    
+    return render(request,'concert/myaccount.html',context)
 
 @login_required
 def concertAdd(request):

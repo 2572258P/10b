@@ -40,7 +40,8 @@
 {% endblock %}
 
 {% block head_block %}
-    <script type="text/javascript"> <!-- Random selection of defaul images -->
+    <!-- Random selection of default images -->
+    <script type="text/javascript"> 
         function ShowRandomDefaultImage() {
             var rand = Math.floor(Math.random() * 5) + 1;
             String.prototype.format = function (args) {
@@ -51,14 +52,21 @@
             }
             var imgTag = "<div><img src=\"/media/default_img/default{num}.png\"></div>".format({ num: rand })        
             document.write(imgTag)
-        }
+        }    
     </script>
+    <script src="{{STATIC_URL}}/static/jquery/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#concertBody").animate({ opacity: 0 }, 0);
+            $("#concertBody").animate({ opacity: 1 }, 600);        
+        });
+    </script>    
 {% endblock %}
 
 {% block body_block %}
 <div id="concertBody">
     {% if concert.img %}
-        <div><img class="concertImg" src={{concert.img.url}}></div>
+        <img class="concertImg" src={{concert.img.url}}></div>
     {% else %}
         <script type="text/javascript"> ShowRandomDefaultImage() </script>
     {% endif %}

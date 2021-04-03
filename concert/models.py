@@ -32,8 +32,7 @@ class ConcertModel(models.Model): #concert is a sensitive keyword, therefore 'Mo
 class Ticket(models.Model):
     ticketId = models.IntegerField(default=0)
     concertId = models.IntegerField(default=0)    
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)    
     
 class Order(models.Model):
     orderId = models.IntegerField(default=0)
