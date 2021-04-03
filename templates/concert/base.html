@@ -94,20 +94,10 @@
    
     <title> Team10B Concert -{% block title_block %} Music is life {% endblock %}</title>
     {% block head_block %}
-	<script>
-        <!-- The block provides adding java script or other implementation for each template page-->
-		function conditionPopUp(){
-		var popup1 = document.getElementById("popup-1")
-		var openPopup1 = document.getElementById("open-popup-1")
-		var closePopup1 = document.getElementById('close-popup-1')		
-		openPopup1.addEventListener('click', () => {
-			popup1.style.display = "block";
-			})
-		closePopup1.addEventListener('click', () => {
-			popup1.style.display = "none";
-			})
-		}
-	</script>	
+        <!-- 
+        This block provides space for java script or other implementation for others template pages.
+        Override this block when adding java script is needed
+        -->
     {% endblock %}
     </head>
 
