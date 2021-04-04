@@ -2,20 +2,31 @@
 {% load staticfiles %}
 
 {% block title_block %}
-
 Booking Page
 {% endblock %}
 
+
+{% block style_block %}
+    .center{
+	width:50%;
+	margin-left:40%;	
+	align: left;	
+	}
+{% endblock %}
+
+
+
+
 {% block body_block %}
 {% if concert and concert.band %}
-<div>
+<div class="center">
     <p>Concert Id : {{ concert.concertId }}</p>
     <p>Concert Name : {{ concert.concertName }}</p>
     <p>Band Id : {{ concert.bandId }}</p>
     <p>Band Name : {{ concert.band.bandName }}</p>
     <p>Location : {{ concert.location }}</p>
     <p>Date : {{ concert.date }}</p>
-</div>
+
 
 <strong>Is it correct?</strong>
 <form id="booking" method="post" action="/booking/{{concert.concertId}}/"enctype="multipart/form-data">
@@ -23,6 +34,6 @@ Booking Page
 <input type="submit" name="Yes" Value="Yes">
 <input type="submit" name="No" Value="No">
 </form>
-
+</div>
 {% endif %}
 {% endblock %}
