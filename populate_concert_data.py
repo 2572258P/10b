@@ -48,8 +48,7 @@ def addUser(username):
     print("User has been created : " + username)
     return newUser
 
-def addBand(user):
-        
+def addBand(user):        
     bandId = getTimeToInt()
     bandName = bandNames[random.randint(0,len(bandNames)-1 )]
     
@@ -85,7 +84,7 @@ def addConcert(ownerBand,count):
             newCon.save()
             print(concertName)
 
-def generateConcertData():    
+def generateConcertData():
      #Since adding concert needs a user who has a band, new test user adds each time of running
     user = addUser("team10b_"+str(getTimeToInt()))
     band = addBand(user) #Add a band based on the created user
