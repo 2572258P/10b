@@ -1,18 +1,29 @@
 {% extends 'concert/base.html' %}
+{% block style_block %}
+    .center{
+	position:relative;
+	top:50px;
+	height:150px;
+	width:60%;
+	margin-left:40%;	
+	align: left;
+	}
+{% endblock %}
 {% block title_block %}
 Delete account confirmation
 {% endblock %}
 
 {% block body_block %}
-
-{% if deleteConfirmed %}
-<strong>Your account has been successfully deleted. Thank you for being with us.Good bye.</strong>
-{% else %}
-<strong>Are you sure to delete your account? <br/>Your account cannot be restored after deleting.</strong>
-<form id="DeleteAccount" method="post" action="/deleteAccount/"enctype="multipart/form-data">
-{% csrf_token %}
-<input type="submit" name="Yes" Value="Yes">
-<input type="submit" name="No" Value="No">
-</form>
-{% endif %}
+<div class = "center">
+	{% if deleteConfirmed %}
+		<strong>Your account has been successfully deleted. Thank you for being with us.Good bye.</strong>
+	{% else %}
+		<strong>Are you sure to delete your account? <br/>Your account cannot be restored after deleting.</strong>
+		<form id="DeleteAccount" method="post" action="/deleteAccount/"enctype="multipart/form-data">
+		{% csrf_token %}
+			<input type="submit" name="Yes" Value="Yes">
+			<input type="submit" name="No" Value="No">
+		</form>
+	{% endif %}
+</div>
 {% endblock %}

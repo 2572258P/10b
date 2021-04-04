@@ -24,6 +24,15 @@ This is the register Page <br />
 {% endblock %}
 
 {% block style_block %}
+
+	
+    .center{
+	width:70%;
+	margin-left:40%;	
+	align: left;	
+	}
+
+	
     #popup-1 {
 	display: none;
 	background-color: rgba(0,0,0,0.5);
@@ -42,6 +51,7 @@ This is the register Page <br />
 {% endblock %}
 
 {% block body_block %}
+<div class="center">
 {% if registered %}
 <strong>Register has successfully done.<br /></strong>
 <a href="{% url 'concert:index' %}">Return to home</a><br />
@@ -62,7 +72,7 @@ This is the register Page <br />
 		<button id="close-popup-1">Close</button>
 	</div>
 </div>
-<form id="user_form" method="post" action="{% url 'concert:register' %}"enctype="multipart/form-data">
+<form id="user_form" method="post" action="{% url 'concert:register' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <p>First name:{{ user_form.first_name }}</p>
     <p>Last name:{{ user_form.last_name }}</p>
@@ -70,8 +80,8 @@ This is the register Page <br />
     <p>Password:{{ user_form.password }}</p>
     <p>Password confirm:{{ profile_form.pw_confirm }}</p>
     <p>{{ profile_form.weAreBand }} Check, if you are in a band, then you can register concerts</p>
-    <p>Band Name : {{band_form.bandName}}<br/> You need to set the band name when you check you are a band</p>        
-    <p>{{ profile_form.termsOfService }} Terms of service :	<button type="button" onclick= conditionPopUp() id="open-popup-1">Open Popup</button></p>
+    <p>Band Name : {{band_form.bandName}}<br/>Note: Once we authenticate your band we will contact you for more information.</p>        
+    <p>{{ profile_form.termsOfService }} Terms of service :	<button type="button" onclick= conditionPopUp() id="open-popup-1">Terms&Conditions</button></p>
 	
     {% for error in custom_error_msg %}
         <div class="alert alert-danger">
@@ -82,6 +92,7 @@ This is the register Page <br />
     <input type="submit" name="submit" value="Register" />
 </form>
 {% endif %}
+</div>
 {% endblock %}
 </body>
 </html>

@@ -1,5 +1,12 @@
 {% extends 'concert/base.html' %}
-
+{% block style_block %}
+    .center{
+	width:60%;
+	margin-left:20%;	
+	align: left;
+	
+	}
+{% endblock %}
 {% block title_block %}
 Welcome to the concert project
 {% endblock %}
@@ -20,6 +27,7 @@ Email      : {{user.username}}
 {% block top5_block %}{% endblock %}
 
 {% block body_block %}
+<div class="center">
 <table>
     <tr class="title">
         <th>Your Ticket :</th><th></th>
@@ -44,5 +52,5 @@ Email      : {{user.username}}
 {% endfor %}
 </table>
 <a href={% url 'concert:deleteAccount' %}>Delete my account</a>
-
+</div>
 {% endblock %}
