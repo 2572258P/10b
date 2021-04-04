@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.http import JsonResponse
 
 def index(request):
     concertList = ConcertModel.objects.order_by('-date')    
@@ -229,3 +231,47 @@ def getTimeToInt():
     a = datetime.now()
     a = int(a.strftime('%Y%m%d%H%M%S'))
     return a
+
+
+
+def signup(request):
+    print('*********************************')
+    print(request.is_ajax)
+    if request.is_ajax:
+        print('this is ajax')
+    else:
+        print('this is not ajax')
+    context = {}
+    return render(request,'concert/signup.html',context)
+    
+
+def validate_username(request):
+    """
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'A user with this username already exists.'
+        """
+    data = {}
+    print("validate")
+    data['error_message'] = "This is error"
+    return JsonResponse(data)
+
+
+def email_avail(request):
+    email = request.GET.get("email", None)
+    
+    response = {}
+    response['notEmail'] = email.find('@') == -1
+    response['avail'] = User.objects.filter(username=email).exists() == False
+
+    return JsonResponse(response)
+    
+    
+    
+    
+    
+    
+    

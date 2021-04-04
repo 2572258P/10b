@@ -6,6 +6,7 @@ import datetime
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(widget=forms.EmailInput(attrs={'id': 'email_field'}))
     class Meta:
         model = User
         fields = ('username','password','first_name','last_name')

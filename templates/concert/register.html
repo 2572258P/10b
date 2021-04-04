@@ -19,6 +19,29 @@ This is the register Page <br />
   		closePopup1.addEventListener('click', () => {
   			popup1.style.display = "none";
   			})
+  			
+        $("#email_field").change(function (e) 
+        {
+            $("#error_msg").text("this email address is available")
+            
+            var email = $(this).val();
+                $.ajax({
+                type: 'GET',
+                url: "{% url 'concert:email_avail' %}",
+                data: {"email": email},
+                    success: function (response){
+                        if(response['notEmail'])
+                            $("#error_msg").text("This is not an email address type")
+                        else if(response['avail'])
+                            $("#error_msg").text("available email address")
+                        else
+                            $("#error_msg").text("This email address is already used")
+                    },
+                    error: function (response) {
+                        $("error_msg").text("Json response error")
+                    }
+                });
+        });
     });
 </script>
 {% endblock %}
@@ -66,7 +89,7 @@ This is the register Page <br />
     {% csrf_token %}
     <p>First name:{{ user_form.first_name }}</p>
     <p>Last name:{{ user_form.last_name }}</p>
-    <p>Email:{{ user_form.username }}</p>
+    <p>Email:{{ user_form.username }}<p id="error_msg"></p></p>
     <p>Password:{{ user_form.password }}</p>
     <p>Password confirm:{{ profile_form.pw_confirm }}</p>
     <p>{{ profile_form.weAreBand }} Check, if you are in a band, then you can register concerts</p>
