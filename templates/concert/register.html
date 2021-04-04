@@ -4,8 +4,44 @@
 This is the register Page <br />
 {% endblock %}
 
-{% block body_block %}
+{% block javascript %}<!-- Adding embedding java script to the head -->
+<script src="{{STATIC_URL}}/static/jquery/jquery.min.js"></script> <!-- loading Jquery only when it is needed-->
+<script>
+    $(document).ready(function()
+    {
+  		var popup1 = document.getElementById("popup-1")
+  		var openPopup1 = document.getElementById("open-popup-1")
+  		var closePopup1 = document.getElementById('close-popup-1')		
+  		openPopup1.addEventListener('click', () => {
+  			popup1.style.display = "block";
+  			})
+  			
+  		closePopup1.addEventListener('click', () => {
+  			popup1.style.display = "none";
+  			})
+    });
+</script>
+{% endblock %}
 
+{% block style_block %}
+    #popup-1 {
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+	height: 100vh;
+	width: 100%;
+	}
+	.popup-content {
+	position: relative;
+	padding: 20px;
+	margin: 0 auto;
+	background-color: white;
+	width: 400px;
+	top: 5vh;
+	}
+{% endblock %}
+
+{% block body_block %}
 {% if registered %}
 <strong>Register has successfully done.<br /></strong>
 <a href="{% url 'concert:index' %}">Return to home</a><br />
@@ -32,8 +68,10 @@ This is the register Page <br />
     <p>Last name:{{ user_form.last_name }}</p>
     <p>Email:{{ user_form.username }}</p>
     <p>Password:{{ user_form.password }}</p>
-    <p>Password confirm:{{ profile_form.pw_confirm }}</p>    
-    <p>{{ profile_form.termsOfService }} Terms of service :	<button type="button" onclick= conditionPopUp() id="open-popup-1">Open Popup</button></p>    
+    <p>Password confirm:{{ profile_form.pw_confirm }}</p>
+    <p>{{ profile_form.weAreBand }} Check, if you are in a band, then you can register concerts</p>
+    <p>Band Name : {{band_form.bandName}}<br/> You need to set the band name when you check you are a band</p>        
+    <p>{{ profile_form.termsOfService }} Terms of service :	<button type="button" onclick= conditionPopUp() id="open-popup-1">Open Popup</button></p>
 	
     {% for error in custom_error_msg %}
         <div class="alert alert-danger">

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
-
 <meta charset="utf-8"/>
 <html>    
     <head>
@@ -94,6 +93,7 @@
 
 	
     div.copyright{
+<<<<<<< HEAD
         font-size:80%
 		position: fixed;
 		left: 0;
@@ -114,49 +114,51 @@
 	}
 	
 	.body {
+=======
+         font-size:80%
+    }    
+
+	body {
+>>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
 	font-family: arial;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	}
+	
+	a.mhl:link, a.mhl:visited {
+      background-color: #B20000;
+      color: #FFFFFF;
+      border: 2px solid #712F2F;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-
-	#popup-1 {
-	display: none;
-	background-color: rgba(0,0,0,0.5);
-	position: absolute;
-	height: 100vh;
-	width: 100%;
-	}
-
-	.popup-content {
-	position: relative;
-	padding: 20px;
-	margin: 0 auto;
-	background-color: white;
-	width: 400px;
-	top: 5vh;
-	}
-		
+    a.mhl:hover, a.sh:active {
+      background-color: #BF1212;
+      color: #FFFFFF;
+    }    
+   
+    a.bm:link {color:#AD0000;text-decoration:none;}
+    a.bm:visited {color:#AD0000;text-decoration:none;}
+    a.bm:hover {text-decoration:underline;}
+    
+    
+	{% block style_block %}
+        <!-- you can add styles with this block for each template page-->
     {% endblock %}
+		
+    
     </style>
    
     <title> Team10B Concert -{% block title_block %} Music is life {% endblock %}</title>
-    {% block head_block %}
-	<script>
-        <!-- The block provides adding java script or other implementation for each template page-->
-		function conditionPopUp(){
-		var popup1 = document.getElementById("popup-1")
-		var openPopup1 = document.getElementById("open-popup-1")
-		var closePopup1 = document.getElementById('close-popup-1')		
-		openPopup1.addEventListener('click', () => {
-			popup1.style.display = "block";
-			})
-		closePopup1.addEventListener('click', () => {
-			popup1.style.display = "none";
-			})
-		}
-	</script>	
+    {% block javascript  %}
+        <!-- Adding embedding java script to the head        
+        This block provides space for java script or other implementation for others template pages.
+        Override this block when adding java script is needed
+        -->
     {% endblock %}
     </head>
 
@@ -187,24 +189,37 @@
               {% block top4_block %}
 			  <a href="{% url 'concert:about' %}" id="topNarrowButton1"> About us</a>
                 {% if user.is_authenticated %}
+<<<<<<< HEAD
                     <a href="{% url 'concert:signout' %}" id="topNarrowButton">Sign out</a>
                 {% else %}
                     <a href="{% url 'concert:signin' %}" id="topNarrowButton"> Sign in</a>
+=======
+                    <a href="{% url 'concert:signout' %}" class="mhl">Sign out</a>
+                {% else %}
+                    <a href="{% url 'concert:signin' %}" class="mhl">Sign in</a>
+>>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
                 {% endif %}
               {% endblock %}
           </div>
           <div class="topNarrow">      
             {% block top5_block %}
                 {% if user.is_authenticated %}
+<<<<<<< HEAD
                     <a href="{% url 'concert:myaccount' %}" id="topNarrowButton">MyAccount </a>&nbsp
                 {% else %}
                     <a href="{% url 'concert:register' %}" id="topNarrowButton">Register </a>&nbsp
+=======
+                    <a href="{% url 'concert:myaccount' %}" class="mhl">MyAccount </a>&nbsp
+                {% else %}
+                    <a href="{% url 'concert:register' %}" class="mhl">Register </a>&nbsp
+>>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
                 {% endif %}
             {% endblock %}
           </div>      
       </div>
     {% block body_block %}
     {% endblock %}
+<<<<<<< HEAD
 
     
     <br/><hr class="copyline"><br/>
@@ -219,12 +234,18 @@
     		<a href="{% url 'concert:about' %}">About </a>&nbsp    		
     		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
     		<a href="{% url 'concert:register' %}">Register </a>&nbsp    		
+=======
+    <div style="padding-top: 30px; position: relative; text-align: left">
+    		<a href="{% url 'concert:index' %}" class="bm">Home </a>&nbsp
+    		<a href="{% url 'concert:about' %}" class="bm">About </a>&nbsp
+>>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
     		{% if user.is_authenticated %}
-            <a href="{% url 'concert:signout' %}">Sign out</a>&nbsp
+            <a href="{% url 'concert:signout' %}" class="bm">Sign out</a>&nbsp
         {% else %}
-            <a href="{% url 'concert:signin' %}">Sign in</a>&nbsp
+            <a href="{% url 'concert:signin' %}" class="bm">Sign in</a>&nbsp
         {% endif %}
-            <a href="/dev/1/">Development</a>&nbsp    		
-		</div>		
+		</div>    
+    <hr class="copyline">
+    <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Lab Group 10,Team B Project (2021)</div>
    </body>
 </html>

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from concert.models import UserProfile,ConcertModel,TestModel,Band
+from concert.models import UserProfile,ConcertModel,Band
 from django.contrib.auth.models import User
-from datetime import datetime,date as dt
 import datetime
 
 class UserForm(forms.ModelForm):
@@ -35,14 +34,5 @@ class ConcertForm(forms.ModelForm):
     date = forms.DateField(initial=datetime.date.today,widget=DateInput)
     class Meta:
         model = ConcertModel
-        fields = ('concertName','location','date','img')
+        fields = ('concertName','location','date','img') 
 
-
-        
-class TestForm(forms.ModelForm):
-    concertId = forms.IntegerField(label="ConcertId")
-    class Meta:
-        model = TestModel
-        fields = '__all__'
-        
-    

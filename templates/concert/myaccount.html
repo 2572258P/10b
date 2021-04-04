@@ -8,7 +8,6 @@ Welcome to the concert project
 {% block top2_block %}{% endblock %}
 
 
-
 {% block top3_block %}
 First Name : {{user.first_name}}<br/>
 Last Name  : {{user.last_name}}<br/>
@@ -22,21 +21,28 @@ Email      : {{user.username}}
 
 {% block body_block %}
 <table>
-<tr class="title">
-<th>Your Ticket :</th><th></th>
-</tr>
+    <tr class="title">
+        <th>Your Ticket :</th><th></th>
+    </tr>
 {% for ticket in tickets %}
-<tr>
-<th>
-TicketId  :{{ticket.ticketId}}<br/>
-ConcertId :{{ticket.concertId}}<br/>
-</th>
-<th>
-<a href="/concert/{{ticket.concertId}}/">View Concert</a>
-</th>
-</tr>
+    <tr>
+        <th>            
+            TicketId  :{{ticket.ticketId}}<br/>
+            ConcertId :{{ticket.concertId}}<br/>
+            {% for key, value in concerts.items %} 
+                {% if key == ticket.concertId and value %}
+                      Concert Name : {{value.concertName}}<br/>
+                      Band Name : {{value.band.bandName}}
+                {% endif %}
+            {% endfor %}
+        </th>
+        <th>
+            <a href="/concert/{{ticket.concertId}}/">View Concert</a>&ensp;
+            <a href="/cancelBooking/{{ticket.concertId}}/">Cancel</a>
+        </th>
+    </tr>
 {% endfor %}
-
 </table>
+<a href={% url 'concert:deleteAccount' %}>Delete my account</a>
 
 {% endblock %}

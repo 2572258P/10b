@@ -18,13 +18,14 @@ urlpatterns = [
         path('',views.index,name = 'index'),
         path('about/',views.about,name = 'about'),
         path('booking/<int:concertId>/',views.booking,name = 'booking'),
+        path('cancelBooking/<int:concertId>/',views.cancelBooking,name = 'cancelBooking'),
         path('concert/<int:concertId>/',views.concert,name = 'concert'),
         path('concertAdd/',views.concertAdd,name = 'concertAdd'),
         path('myaccount/',views.myaccount,name = 'myaccount'),
+        path('deleteAccount/',views.deleteAccount,name = 'deleteAccount'),
         path('register/',views.register,name = 'register'),
         path('signin/',views.signin,name = 'signin'),
         path('signout/',views.signout,name = 'signout'),
-        path('dev/<slug:cmd>/',views.dev,name = 'dev'),
         path('SearchResult/',views.search,name = 'searchResult')
         ]
 

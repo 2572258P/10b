@@ -15,16 +15,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class TestModel(models.Model):
-    tempId = models.IntegerField(default=0)
-    tempName = models.CharField(max_length=max_char_field)
-
 class Band(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     bandId = models.IntegerField(default=0)
     bandName = models.CharField(max_length=max_char_field)
     
-class ConcertModel(models.Model):    
+class ConcertModel(models.Model): #concert is a sensitive keyword, therefore 'Model' suffix added  
     concertId = models.IntegerField(default=0)
     concertName = models.CharField(max_length=max_char_field)
     bandId = models.IntegerField(default=0)
@@ -36,8 +32,7 @@ class ConcertModel(models.Model):
 class Ticket(models.Model):
     ticketId = models.IntegerField(default=0)
     concertId = models.IntegerField(default=0)    
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)    
     
 class Order(models.Model):
     orderId = models.IntegerField(default=0)

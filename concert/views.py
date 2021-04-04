@@ -1,46 +1,12 @@
 from django.shortcuts import render
 from concert.forms import UserForm,UserProfileForm,ConcertForm,BandForm #TestForm
-from concert.models import ConcertModel,Ticket,UserProfile,Band
+from concert.models import ConcertModel,Ticket,UserProfile,Band,User
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.contrib import messages 
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector
-from django.db.models import Q
-import random
-
-#from django.http import HttpResponse
-
-from datetime import datetime
-
-def getTimeToInt():    
-    a = datetime.now()
-    a = int(a.strftime('%Y%m%d%H%M%S'))
-    return a
-
-@login_required
-def dev(request,cmd):
-    if request.method == 'POST':
-        if cmd == 'addConcert':
-            Id = getTimeToInt()
-            name = 'Glasgow party' + str(random.randint(1,10000))
-            
-            ConcertModel.objects.get_or_create(date=datetime.now(),concertId=Id,concertName=name);                        
-        if cmd == 'addTicket':
-            if request.user.is_authenticated:
-                ticketId = random.randint(1,10000)
-                concert = ConcertModel.objects.last()
-                Id = 0
-                if concert:
-                    Id = concert.concertId
-                Ticket.objects.get_or_create(ticketId=ticketId,user=request.user,concertId=Id)
-            else:
-                print('You need to be authenticated')        
-    return render(request,'concert/dev.html')
+from django.contrib.auth.models import User
 
 def index(request):
     concertList = ConcertModel.objects.order_by('-date')    
@@ -59,28 +25,45 @@ def index(request):
         context['tickets'] = Ticket.objects.filter(user=request.user)
     return render(request,'concert/index.html',context=context)
 
-def about(request):
-    #context = {}
+def about(request):    
     if request.method == 'POST' and "searchStart" in request.POST:
         keyword = request.POST.get('keyWord')
-        print("**********************")
-        print(keyword)
         
-    return render(request,'concert/about.html')#,context=context)
+    return render(request,'concert/about.html')
+
+@login_required
+def cancelBooking(request,concertId):
+    try:
+        ticket = Ticket.objects.filter(user=request.user,concertId=concertId).get()
+        if ticket != None:
+            concert = ConcertModel.objects.get(concertId=ticket.concertId)
+    except:
+        ticket = None
+        concert = None
+        
+    context = {'ticket':ticket,'concert':concert}
+    
+    if request.method == 'POST':
+        if 'Yes' in request.POST:            
+            for ticket in Ticket.objects.filter(concertId=concertId,user=request.user):
+                ticket.delete()
+        return redirect(reverse('concert:index'))
+        
+    return render(request,'concert/cancelBooking.html',context=context)    
 
 @login_required
 def booking(request,concertId):
     context = {}
     try:        
-        foundConcert = ConcertModel.objects.get(concertId=concertId)
-        context['concert'] = foundConcert
+        concert = ConcertModel.objects.get(concertId=concertId)
+        context['concert'] = concert
     except:     
         context['concert'] = None
         
     if request.method == 'POST':
         if 'Yes' in request.POST:
             ticketId = getTimeToInt()
-            concertId = foundConcert.concertId
+            concertId = concert.concertId
             user = request.user    
             Ticket.objects.get_or_create(ticketId=ticketId,concertId=concertId,user=user)
             return redirect('/')
@@ -102,17 +85,26 @@ def search(request):
     found = []
     if request.method == 'POST':
         keyword = request.POST.get('searchKeyword')       
-        found = ConcertModel.objects.filter(location__contains=keyword) | ConcertModel.objects.filter(concertName__contains=keyword)| ConcertModel.objects.filter(band__bandName__contains=keyword)
-            
-        
-
-        
+        found = ConcertModel.objects.filter(location__contains=keyword) | ConcertModel.objects.filter(concertName__contains=keyword)| ConcertModel.objects.filter(band__bandName__contains=keyword)          
+                
     return render(request,'concert/searchResult.html',context={"searchResults":found})
+
 
 @login_required
 def myaccount(request):    
     tickets = Ticket.objects.filter(user=request.user)
-    return render(request,'concert/myaccount.html',context={'tickets':tickets})
+    concerts = {}
+    context = {}
+    context['tickets'] = tickets
+    context['concerts'] = concerts
+    
+    for ticket in tickets:
+        try:
+            concerts[ticket.concertId] = ConcertModel.objects.get(concertId=ticket.concertId)            
+        except:
+            concerts[ticket.concertId] = None
+    
+    return render(request,'concert/myaccount.html',context)
 
 @login_required
 def concertAdd(request):
@@ -148,8 +140,6 @@ def register(request):
         band_form = BandForm(request.POST)
         passedError = True
         
-        print(request.POST.get('weAreBand'))
-        
         if request.POST.get('pw_confirm') != request.POST.get('password'):
             custom_error_msg.append('Please, check the password confirmation')
             passedError = False
@@ -173,8 +163,7 @@ def register(request):
                 band.user = user
                 band.save()
 
-            registered = True            
-            username = user.username
+            registered = True
             password = request.POST.get('pw_confirm')
             authenticate(username=request.user,password=password)                
             login(request,user)
@@ -212,9 +201,31 @@ def signin(request):
 
 @login_required
 def signout(request):
-    logout(request)    
+    logout(request)
     return redirect(reverse('concert:index'))  
-        
-        
-        
-        
+
+@login_required
+def deleteAccount(request):
+    confirmedToDelete = False
+    
+    if request.method == 'POST':
+        if 'Yes' in request.POST:            
+            user = User.objects.filter(username=request.user.username)
+            if user != None:
+                user.delete()
+                logout(request)
+                
+                confirmedToDelete = True
+        else:                
+            return redirect(reverse('concert:index'))
+            
+    
+    context = {"deleteConfirmed":confirmedToDelete}
+    return render(request,'concert/deleteAccount.html',context)
+    
+    
+    
+def getTimeToInt():    
+    a = datetime.now()
+    a = int(a.strftime('%Y%m%d%H%M%S'))
+    return a

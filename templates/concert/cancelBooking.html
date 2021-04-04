@@ -1,0 +1,31 @@
+{% extends 'concert/base.html' %}
+{% block title_block %}
+Cancel Booking conformation
+{% endblock %}
+
+{% block body_block %}
+<strong>Are you sure to cancel booking? </strong>
+{% if ticket %}
+    <div>
+        <p>Ticket Id : {{ ticket.ticketId }}</p>
+    </div>
+{% endif %}
+
+{% if concert and concert.band %}
+<div>
+    <p>Concert Id : {{concert.concertId}}</p>
+    <p>Concert Name : {{concert.concertName}}</p>
+    <p>Band Name : {{concert.band.bandName}}</p>
+    <p>Concert Date : {{concert.date}}</p>
+    <p>Location : {{concert.location}}</p>
+</div>
+{% endif %}
+
+
+<form id="CancelBooking" method="post" action="/cancelBooking/{{ concert.concertId }}/"enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="submit" name="Yes" Value="Yes">
+    <input type="submit" name="No" Value="No">
+</form>
+
+{% endblock %}
