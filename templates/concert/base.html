@@ -4,65 +4,106 @@
 <meta charset="utf-8"/>
 <html>    
     <head>
+	
     <style>
-    *{font-family: arial, sans-serif;}
+    *{font-family: arial, sans-serif; align:center;} 
 
     #topmenu {
-      width: 70%;
+      width: 100%;
       height: 150px;
       border: 0px solid black; 
       display: flex;
       align-items: top;
+	  background-color : #00008B;
+	  background-image: linear-gradient(to right, #00008B, #00BFFF);
+	  
     }
-    #topmenu div {       
+    #topmenu div {  
+		width : 100%;
        border: 0px solid black; 
        padding-left:20px;
-       padding-top:80px;
+       padding-top:70px;
     }
     img.logo{
-         width:100%;
-         height:100%;
-         object-fit:contain;
+		width:100%;
+        height:100%;
+		position:relative; 
+		top : -25px;
+        object-fit:contain;
     }
+	
     table {
       border-collapse: collapse;
-      width: 70%;
-    }    
+      width: 90%;
+    }
+    
     td, th {
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
     }
-	.center{
-		position: relative;
-		float: center;
-		text-align: center;
-		width: 400px;
-		border: 3px solid green;
-		padding: 20px;
-    }	
+	
     tr.title{
         background-color:grey;
     }    
     tr:nth-child(even) {
       background-color: #dddddd;
     }
+	
     hr.copyline {
         border: 1px solid;
+		contain:fit;
+
     }    
     div.topWide{
         flex:2;
         padding-left:0px;
     }
     div.topNarrow{
+		float:right;
+		align-items:center;
+		color:#d9d9d9;
+		margin-right: -120px;
         flex:1;
         padding-top:0px;
     }
-    div.copyright{
-         font-size:80%
-    }    
+	#topNarrowButton{
+		underline:none;
+		background-color: #00008B; 
+		color: #fff; 
+		cursor: pointer; 
+		padding: 10px 30px;  
+	}
+	#topNarrowButton1{
+		margin-right:20px;	
+		underline:none;
+		background-color: #00008B; 
+		color: #fff; 
+		cursor: pointer; 
+		padding: 10px 30px;  
+	}
+	
+	.searchButton{
+		underline:none;
+		background-color: #808080; 
+		color: #fff; 
+		cursor: pointer; 
+		padding: 4px 15px; 
+	}
 
-	body {
+	
+    div.copyright{
+        font-size:80%
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		background-color: #D3D3D3;
+		color: black;
+		text-align: center;
+    }
+	     
+	.body {
 	font-family: arial;
 	margin: 0;
 	padding: 0;
@@ -91,8 +132,7 @@
     a.bm:link {color:#AF0101;text-decoration:none;bold;font-weight:bold}
     a.bm:visited {color:#AF0101;text-decoration:none;font-weight:bold}
     a.bm:hover {text-decoration:underline;}
-    
-    
+  
 	{% block style_block %}
         <!-- you can add styles with this block for each template page-->
     {% endblock %}
@@ -114,53 +154,66 @@
           <div class="topNarrow">
               {% block top1_block %}
                   <a href="{% url 'concert:index' %}">
-                  <img class="logo" src="{% static 'logo.jpg' %}" alt="logo image"></a>
+                  <img class="logo" src="{% static 'logo.png' %}" alt="logo image"></a>
               {% endblock %}
           </div>
           <div class="topNarrow">
               {% block top2_block %}
               {% endblock %}   
           </div>
-          <div class="topWide">
+          <div class="topWide" >
+	
               {% block top3_block %}
                 <form method="post" action="{% url 'concert:searchResult' %}">
                 {% csrf_token %}
                   <input type="text" name="searchKeyword">
-                  <input type="submit" value="Search Concert">
+                  <input type="submit" value="Search" class="searchButton">
                 </form>
               {% endblock %}
+			  
           </div>
           <div class="topNarrow">
               {% block top4_block %}
+			  <a href="{% url 'concert:about' %}" id="topNarrowButton1"> About us</a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'concert:signout' %}" class="mhl">Sign out</a>
+
+                    <a href="{% url 'concert:signout' %}" id="topNarrowButton">Sign out</a>
                 {% else %}
-                    <a href="{% url 'concert:signin' %}" class="mhl">Sign in</a>
+                    <a href="{% url 'concert:signin' %}" id="topNarrowButton"> Sign in</a>
                 {% endif %}
               {% endblock %}
           </div>
           <div class="topNarrow">      
             {% block top5_block %}
                 {% if user.is_authenticated %}
-                    <a href="{% url 'concert:myaccount' %}" class="mhl">MyAccount </a>&nbsp
+
+                    <a href="{% url 'concert:myaccount' %}" id="topNarrowButton">MyAccount </a>&nbsp
                 {% else %}
-                    <a href="{% url 'concert:register' %}" class="mhl">Register </a>&nbsp
+                    <a href="{% url 'concert:register' %}" id="topNarrowButton">Register </a>&nbsp
                 {% endif %}
             {% endblock %}
           </div>      
       </div>
     {% block body_block %}
     {% endblock %}
-    <div style="padding-top: 30px; position: relative; text-align: left">
-    		<a href="{% url 'concert:index' %}" class="bm">Home </a>&nbsp
-    		<a href="{% url 'concert:about' %}" class="bm">About </a>&nbsp
-    		{% if user.is_authenticated %}
-            <a href="{% url 'concert:signout' %}" class="bm">Sign out</a>&nbsp
-        {% else %}
-            <a href="{% url 'concert:signin' %}" class="bm">Sign in</a>&nbsp
-        {% endif %}
-		</div>    
-    <hr class="copyline">
-    <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Lab Group 10,Team B Project (2021)</div>
+
+
+    
+    <br/><hr class="copyline"><br/>
+    
+    <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Team 10b Project (2021)
+		<br>TicketFinder</br>
+    
+     <div style="padding-top: 30px; position: relative; text-align: left">
+         <div style="font-size:12px;color:red">
+        This bottom line is just for test efficiency all links are in one place - will be removed<br/></div>         
+    		<a href="{% url 'concert:index' %}">Home </a>&nbsp
+    		<a href="{% url 'concert:about' %}">About </a>&nbsp    		
+    		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
+    		<a href="{% url 'concert:register' %}">Register </a>&nbsp    	
+		</div>
+	</div>
+
+	</Div>
    </body>
 </html>
