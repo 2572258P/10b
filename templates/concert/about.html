@@ -4,21 +4,28 @@
 About Rango
 {% endblock %}
 
+{% block style_block %}
+    .center{
+	width:60%;
+	margin-left:20%;	
+	align: left;
+	
+	}
+{% endblock %}
 
 {% block body_block %}
-<div title= " About"></div>
+<div title= " About" class ="center">
 	<h2>Who we are?</h2>
-	<div class = "centered" >
+	<div >
 		<p>At Ticket finder, we strive to put fans first. Every day we're listening to your feedback and working to improve your experience before, during, and after events. 
 		Our purpose is to provide to music enthusiasts a cheap and easy way to book tickets for live concerts. This dream began in 2019 and has succesfully sold over 100 000+ tickets online.
 		Our Headquarters are located in Glasgow, Scotland were our team is also based in and strives to provide you with best service possible. We're making real changes and putting you first in everything we do.<br/> </p>
 	</div>
 </div>
-<div title = "Contact">
-
-<h2>Get in Touch</h2>
-<p> You can contact us through: <br/> <a href="mailto:info@ticketfinder.com">info@ticketfinder.com</a> </p>
-
+<div title = "Contact" class= "center">
+	<h2>Get in Touch</h2>
+	<p> You can contact us through: <br/> <a href="mailto:info@ticketfinder.com">info@ticketfinder.com</a> </p>
+</div>
 
   
 {% endblock %}
