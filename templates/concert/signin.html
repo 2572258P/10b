@@ -1,10 +1,23 @@
 {% extends 'concert/base.html' %}
 
+{% block style_block %}
+    .center{
+	position:relative;
+	top:50px;
+	height:150px;
+	width:60%;
+	margin-left:40%;	
+	align: left;
+	
+	}
+{% endblock %}
+
 {% block title_block %}
 Welcome to the concert project
 {% endblock %}
 
 {% block body_block %}
+<div class="center">
     {% for error in error_msg %}
         <strong>{{error}}</strong>
     {%endfor%}  
@@ -16,5 +29,5 @@ Welcome to the concert project
         <br />
         <input type="submit" value="submit" />
     </form>
-
+</div>
 {% endblock %}
