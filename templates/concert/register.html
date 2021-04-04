@@ -46,9 +46,7 @@ This is the register Page <br />
 </script>
 {% endblock %}
 
-{% block style_block %}
-
-	
+{% block style_block %}	
     .center{
 	width:70%;
 	margin-left:40%;	
@@ -59,7 +57,7 @@ This is the register Page <br />
     #popup-1 {
 	display: none;
 	background-color: rgba(0,0,0,0.5);
-	position: absolute;
+	position: relative;
 	height: 100vh;
 	width: 100%;
 	}
@@ -74,13 +72,6 @@ This is the register Page <br />
 {% endblock %}
 
 {% block body_block %}
-<div class="center">
-{% if registered %}
-<strong>Register has successfully done.<br /></strong>
-<a href="{% url 'concert:index' %}">Return to home</a><br />
-{% else %}
-<strong>Fill the form to register</strong><br />
-<body>
 <div id="popup-1">
 	<div class="popup-content">
 		<h1>Terms & Conditions</h1>
@@ -95,6 +86,12 @@ This is the register Page <br />
 		<button id="close-popup-1">Close</button>
 	</div>
 </div>
+<div class="center">
+{% if registered %}
+<strong>Register has successfully done.<br /></strong>
+<a href="{% url 'concert:index' %}">Return to home</a><br />
+{% else %}
+<strong>Fill the form to register</strong><br />
 <form id="user_form" method="post" action="{% url 'concert:register' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <p>First name:{{ user_form.first_name }}</p>
@@ -117,5 +114,4 @@ This is the register Page <br />
 {% endif %}
 </div>
 {% endblock %}
-</body>
 </html>
