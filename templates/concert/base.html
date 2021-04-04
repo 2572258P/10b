@@ -93,7 +93,6 @@
 
 	
     div.copyright{
-<<<<<<< HEAD
         font-size:80%
 		position: fixed;
 		left: 0;
@@ -103,23 +102,8 @@
 		color: black;
 		text-align: center;
     }
-	
-
-    
-    {% block style_block %}
-        <!-- you can add styles with this block for each template page-->
-		
-	.centered{
-	
-	}
-	
+	     
 	.body {
-=======
-         font-size:80%
-    }    
-
-	body {
->>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
 	font-family: arial;
 	margin: 0;
 	padding: 0;
@@ -144,8 +128,7 @@
     a.bm:link {color:#AD0000;text-decoration:none;}
     a.bm:visited {color:#AD0000;text-decoration:none;}
     a.bm:hover {text-decoration:underline;}
-    
-    
+  
 	{% block style_block %}
         <!-- you can add styles with this block for each template page-->
     {% endblock %}
@@ -167,7 +150,7 @@
           <div class="topNarrow">
               {% block top1_block %}
                   <a href="{% url 'concert:index' %}">
-                  <img class="logo" src="{% static 'logo.jpg' %}" alt="logo image"></a>
+                  <img class="logo" src="{% static 'logo.png' %}" alt="logo image"></a>
               {% endblock %}
           </div>
           <div class="topNarrow">
@@ -189,37 +172,27 @@
               {% block top4_block %}
 			  <a href="{% url 'concert:about' %}" id="topNarrowButton1"> About us</a>
                 {% if user.is_authenticated %}
-<<<<<<< HEAD
+
                     <a href="{% url 'concert:signout' %}" id="topNarrowButton">Sign out</a>
                 {% else %}
                     <a href="{% url 'concert:signin' %}" id="topNarrowButton"> Sign in</a>
-=======
-                    <a href="{% url 'concert:signout' %}" class="mhl">Sign out</a>
-                {% else %}
-                    <a href="{% url 'concert:signin' %}" class="mhl">Sign in</a>
->>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
                 {% endif %}
               {% endblock %}
           </div>
           <div class="topNarrow">      
             {% block top5_block %}
                 {% if user.is_authenticated %}
-<<<<<<< HEAD
+
                     <a href="{% url 'concert:myaccount' %}" id="topNarrowButton">MyAccount </a>&nbsp
                 {% else %}
                     <a href="{% url 'concert:register' %}" id="topNarrowButton">Register </a>&nbsp
-=======
-                    <a href="{% url 'concert:myaccount' %}" class="mhl">MyAccount </a>&nbsp
-                {% else %}
-                    <a href="{% url 'concert:register' %}" class="mhl">Register </a>&nbsp
->>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
                 {% endif %}
             {% endblock %}
           </div>      
       </div>
     {% block body_block %}
     {% endblock %}
-<<<<<<< HEAD
+
 
     
     <br/><hr class="copyline"><br/>
@@ -233,19 +206,10 @@
     		<a href="{% url 'concert:index' %}">Home </a>&nbsp
     		<a href="{% url 'concert:about' %}">About </a>&nbsp    		
     		<a href="{% url 'concert:myaccount' %}">MyAccount </a>&nbsp
-    		<a href="{% url 'concert:register' %}">Register </a>&nbsp    		
-=======
-    <div style="padding-top: 30px; position: relative; text-align: left">
-    		<a href="{% url 'concert:index' %}" class="bm">Home </a>&nbsp
-    		<a href="{% url 'concert:about' %}" class="bm">About </a>&nbsp
->>>>>>> 682b36e8ced3456a6991d27c2ff75bba12c4d66d
-    		{% if user.is_authenticated %}
-            <a href="{% url 'concert:signout' %}" class="bm">Sign out</a>&nbsp
-        {% else %}
-            <a href="{% url 'concert:signin' %}" class="bm">Sign in</a>&nbsp
-        {% endif %}
-		</div>    
-    <hr class="copyline">
-    <Div class="copyright"> University of Glasgow - WEB APPLICATION DEVELOPMENT 2 - Lab Group 10,Team B Project (2021)</div>
+    		<a href="{% url 'concert:register' %}">Register </a>&nbsp    	
+		</div>
+	</div>
+
+	</Div>
    </body>
 </html>
